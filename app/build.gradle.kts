@@ -44,6 +44,8 @@ android {
 
 dependencies {
     implementation(project(":core"))
+    implementation(project(":movie"))
+
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.fragment.ktx)
 
