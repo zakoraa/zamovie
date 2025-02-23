@@ -63,9 +63,9 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    api(libs.junit)
+    api(libs.androidx.junit)
+    api(libs.androidx.espresso.core)
 
     api(libs.material)
     api(libs.recyclerview)
@@ -73,7 +73,7 @@ dependencies {
 
     api(libs.room.runtime)
     ksp(libs.room.compiler)
-    androidTestImplementation(libs.room.testing)
+    api(libs.room.testing)
 
     api(libs.retrofit)
     api(libs.converter.gson)

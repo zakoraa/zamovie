@@ -1,8 +1,7 @@
 package com.raflis.tv_series.di
 
-import com.raflis.movie.di.TvSeriesRepositoryModule
 import com.raflis.tv_series.domain.repository.TvSeriesRepository
-import com.raflis.tv_series.domain.usecase.GetAllTvSeriessUseCase
+import com.raflis.tv_series.domain.usecase.GetAllTvSeriesUseCase
 import com.raflis.tv_series.domain.usecase.GetTvSeriesById
 import dagger.Module
 import dagger.Provides
