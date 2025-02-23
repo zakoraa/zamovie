@@ -72,6 +72,8 @@ dependencies {
     api(libs.glide)
 
     api(libs.room.runtime)
+    implementation(libs.material)
+    implementation(libs.androidx.activity)
     ksp(libs.room.compiler)
     api(libs.room.testing)
 

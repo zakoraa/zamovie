@@ -2,7 +2,15 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Zamovie" parent="Theme.Material3.Dark.NoActionBar">
         <!-- Customize your light theme here. -->
-         <item name="backgroundColor">@color/background</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowEnterTransition">@android:transition/explode</item>
+        <item name="android:windowExitTransition">@android:transition/explode</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="backgroundColor">@color/background</item>
 
         <item name="colorPrimary">@color/primary</item>
         <item name="colorOnPrimary">@color/onPrimary</item>
