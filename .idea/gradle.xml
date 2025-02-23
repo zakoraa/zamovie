@@ -12,9 +12,8 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/core" />
-            <option value="$PROJECT_DIR$/favorite" />
+            <option value="$PROJECT_DIR$/favorite_movie" />
             <option value="$PROJECT_DIR$/movie" />
-            <option value="$PROJECT_DIR$/tv_series" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

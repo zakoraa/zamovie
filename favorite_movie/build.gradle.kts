@@ -1,21 +1,14 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.dynamic.feature)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.hiltAndroid)
+    alias(libs.plugins.kotlin.parcelize)
 }
-
 android {
-    namespace = "com.raflis.zamovie"
+    namespace = "com.raflis.zamovie.favorite_movie"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.raflis.zamovie"
         minSdk = 24
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -23,7 +16,6 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
@@ -39,16 +31,10 @@ android {
         viewBinding = true
         buildConfig = true
     }
-    dynamicFeatures += setOf(":favorite_movie")
 }
 
 dependencies {
+    implementation(project(":app"))
     implementation(project(":core"))
-    implementation(libs.androidx.activity.ktx)
-    implementation(libs.androidx.fragment.ktx)
 
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
-
-    implementation(libs.feature.delivery.ktx)
 }

@@ -22,6 +22,5 @@ dependencyResolutionManagement {
 rootProject.name = "Zamovie"
 include(":app")
 include(":core")
-include(":favorite")
+include(":favorite_movie")
 include(":movie")
-include(":tv_series")
