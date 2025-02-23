@@ -18,7 +18,7 @@ interface MovieDao {
     fun getMovieById(id: Int): Flow<MovieEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertMovies(tourism: List<MovieEntity>)
+    suspend fun insertMovies(movie: List<MovieEntity>)
 
     @Update
     suspend fun updateMovie(movie: MovieEntity)

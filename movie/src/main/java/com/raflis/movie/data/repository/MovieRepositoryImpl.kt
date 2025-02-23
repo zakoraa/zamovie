@@ -1,7 +1,7 @@
 package com.raflis.movie.data.repository
 
 import com.raflis.core.data.NetworkBoundResource
-import com.raflis.core.data.Resource
+import com.raflis.core.util.Resource
 import com.raflis.core.data.source.remote.network.ApiResponse
 import com.raflis.movie.data.source.local.MovieLocalDataSource
 import com.raflis.movie.data.source.remote.MovieRemoteDataSource

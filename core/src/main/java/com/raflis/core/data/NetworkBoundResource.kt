@@ -1,6 +1,7 @@
 package com.raflis.core.data
 
 import com.raflis.core.data.source.remote.network.ApiResponse
+import com.raflis.core.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.first

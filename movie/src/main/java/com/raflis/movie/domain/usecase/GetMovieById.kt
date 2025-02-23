@@ -1,6 +1,6 @@
 package com.raflis.movie.domain.usecase
 
-import com.raflis.core.data.Resource
+import com.raflis.core.util.Resource
 import com.raflis.core.domain.usecase.UseCase
 import com.raflis.movie.domain.model.Movie
 import com.raflis.movie.domain.repository.MovieRepository

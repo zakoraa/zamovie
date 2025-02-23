@@ -1,6 +1,6 @@
 package com.raflis.movie.domain.repository
 
-import com.raflis.core.data.Resource
+import com.raflis.core.util.Resource
 import com.raflis.movie.domain.model.Movie
 import kotlinx.coroutines.flow.Flow
 
