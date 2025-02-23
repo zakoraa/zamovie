@@ -23,3 +23,5 @@ rootProject.name = "Zamovie"
 include(":app")
 include(":core")
 include(":favorite")
+include(":movie")
+include(":tv_series")

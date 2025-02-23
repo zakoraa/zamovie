@@ -1,10 +1,10 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
-    id("kotlin-parcelize")
-    id("kotlin-kapt")
-    id("com.google.dagger.hilt.android")
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -16,6 +16,24 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        val keystoreFile = project.rootProject.file("apikey.properties")
+        val properties = Properties()
+        properties.load(keystoreFile.inputStream())
+
+        val apiKey = properties.getProperty("API_KEY") ?: ""
+
+        buildConfigField(
+            "String",
+            "BASE_URL",
+            "\"https://api.themoviedb.org/3/\""
+        )
+
+        buildConfigField(
+            "String",
+            "API_KEY",
+            "\"$apiKey\""
+        )
     }
 
     buildTypes {
@@ -53,17 +71,17 @@ dependencies {
     api(libs.recyclerview)
     api(libs.glide)
 
-    implementation(libs.room.runtime)
+    api(libs.room.runtime)
     ksp(libs.room.compiler)
     androidTestImplementation(libs.room.testing)
 
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
-    implementation(libs.logging.interceptor)
+    api(libs.retrofit)
+    api(libs.converter.gson)
+    api(libs.logging.interceptor)
 
-    implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.androidx.lifecycle.livedata.ktx)
+    api(libs.kotlinx.coroutines.android)
+    api(libs.androidx.lifecycle.livedata.ktx)
 
-    implementation(libs.hilt.android)
+    api(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
 }

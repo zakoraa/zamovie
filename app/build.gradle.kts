@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
-    id("kotlin-parcelize")
     alias(libs.plugins.hiltAndroid)
 }
 
@@ -44,13 +43,11 @@ android {
 }
 
 dependencies {
-
     implementation(project(":core"))
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.fragment.ktx)
 
     implementation(libs.hilt.android)
-    implementation(libs.core)
     ksp(libs.hilt.android.compiler)
 
     implementation(libs.feature.delivery.ktx)
