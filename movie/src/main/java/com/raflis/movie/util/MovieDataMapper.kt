@@ -7,21 +7,7 @@ import com.raflis.movie.domain.model.Movie
 object MovieDataMapper {
 
     fun mapResponsesToEntities(input: List<MovieResponse>): List<MovieEntity> {
-        return input.map {
-            MovieEntity(
-                id = it.id ?: 0,
-                overview = it.overview ?: "",
-                originalLanguage = it.originalLanguage ?: "",
-                originalTitle = it.originalTitle ?: "",
-                title = it.title ?: "",
-                genreIds = it.genreIds?.filterNotNull(),
-                posterPath = it.posterPath ?: "",
-                backdropPath = it.backdropPath ?: "",
-                releaseDate = it.releaseDate ?: "",
-                popularity = it.popularity ?: 0.0,
-                voteAverage = it.voteAverage ?: 0.0
-            )
-        }
+        return input.map { mapResponseToEntity(it) }
     }
 
     // Convert dari Remote API Response ke Database Entity
