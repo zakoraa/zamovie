@@ -34,8 +34,8 @@ class MovieRepositoryImpl @Inject constructor(
                 remoteDataSource.getAllMovies(movieType)
 
             override suspend fun saveCallResult(data: List<MovieResponse>) {
-                val tourismList = MovieDataMapper.mapResponsesToEntities(data, movieType)
-                localDataSource.insertMovies(tourismList)
+                val movieList = MovieDataMapper.mapResponsesToEntities(data, movieType)
+                localDataSource.insertMovies(movieList)
             }
         }.asFlow()
 

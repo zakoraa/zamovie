@@ -11,7 +11,6 @@ object FavoriteMovieDataMapper {
             id = input.id,
             originalLanguage = input.originalLanguage,
             title = input.title,
-            genreIds = input.genreIds,
             posterPath = input.posterPath,
             releaseDate = input.releaseDate,
             popularity = input.popularity,
@@ -30,7 +29,6 @@ object FavoriteMovieDataMapper {
             id = input.id ?: 0, // Default 0 jika null
             originalLanguage = input.originalLanguage ?: "",
             title = input.title ?: "",
-            genreIds = input.genreIds?.filterNotNull() ?: emptyList(),
             posterPath = input.posterPath ?: "",
             releaseDate = input.releaseDate ?: "",
             popularity = input.popularity ?: 0.0,

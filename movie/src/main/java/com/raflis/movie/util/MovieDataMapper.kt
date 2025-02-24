@@ -1,9 +1,12 @@
 package com.raflis.movie.util
 
+import com.raflis.core.util.DateFormatter.formatDate
+import com.raflis.core.util.DateFormatter.parseDate
 import com.raflis.movie.data.source.local.entity.MovieEntity
 import com.raflis.movie.data.source.remote.response.MovieResponse
 import com.raflis.movie.domain.model.Movie
 import com.raflis.movie.domain.model.MovieType
+import com.raflis.movie.presentation.model.MovieModel
 
 object MovieDataMapper {
 
@@ -19,7 +22,6 @@ object MovieDataMapper {
             originalLanguage = input.originalLanguage ?: "",
             originalTitle = input.originalTitle ?: "",
             title = input.title ?: "",
-            genreIds = input.genreIds?.filterNotNull() ?: emptyList(),
             posterPath = input.posterPath ?: "",
             backdropPath = input.backdropPath ?: "",
             releaseDate = input.releaseDate ?: "",
@@ -38,7 +40,6 @@ object MovieDataMapper {
                 originalLanguage = it.originalLanguage,
                 originalTitle = it.originalTitle,
                 title = it.title,
-                genreIds = it.genreIds,
                 posterPath = it.posterPath,
                 backdropPath = it.backdropPath,
                 releaseDate = it.releaseDate,
@@ -56,7 +57,6 @@ object MovieDataMapper {
             originalLanguage = input.originalLanguage ?: "",
             originalTitle = input.originalTitle ?: "",
             title = input.title ?: "",
-            genreIds = input.genreIds?.filterNotNull(),
             posterPath = input.posterPath ?: "",
             backdropPath = input.backdropPath ?: "",
             releaseDate = input.releaseDate ?: "",
@@ -74,12 +74,53 @@ object MovieDataMapper {
             originalLanguage = input.originalLanguage,
             originalTitle = input.originalTitle,
             title = input.title,
-            genreIds = input.genreIds,
             posterPath = input.posterPath,
             backdropPath = input.backdropPath,
             releaseDate = input.releaseDate,
             popularity = input.popularity,
             voteAverage = input.voteAverage
         )
+    }
+
+    // Convert dari Domain ke UI Model (SINGLE)
+    fun mapDomainToPresentation(input: Movie): MovieModel {
+        return MovieModel(
+            id = input.id,
+            overview = input.overview,
+            originalLanguage = input.originalLanguage,
+            originalTitle = input.originalTitle,
+            title = input.title,
+            posterPath = input.posterPath,
+            backdropPath = input.backdropPath,
+            releaseDate = formatDate(input.releaseDate),
+            popularity = input.popularity,
+            voteAverage = input.voteAverage
+        )
+    }
+
+    // Convert dari UI Model ke Domain (SINGLE)
+    fun mapPresentationToDomain(input: MovieModel): Movie {
+        return Movie(
+            id = input.id,
+            overview = input.overview,
+            originalLanguage = input.originalLanguage,
+            originalTitle = input.originalTitle,
+            title = input.title,
+            posterPath = input.posterPath,
+            backdropPath = input.backdropPath,
+            releaseDate = parseDate(input.releaseDate),
+            popularity = input.popularity,
+            voteAverage = input.voteAverage
+        )
+    }
+
+    // Convert dari List Domain ke List UI Model
+    fun mapDomainListToPresentation(input: List<Movie>): List<MovieModel> {
+        return input.map { mapDomainToPresentation(it) }
+    }
+
+    // Convert dari List UI Model ke List Domain
+    fun mapPresentationListToDomain(input: List<MovieModel>): List<Movie> {
+        return input.map { mapPresentationToDomain(it) }
     }
 }

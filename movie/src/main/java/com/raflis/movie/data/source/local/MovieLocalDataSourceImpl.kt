@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class MovieLocalDataSourceImpl @Inject constructor(private val dao: MovieDao) : MovieLocalDataSource {
-    override fun getAllMovies(movieType: MovieType): Flow<List<MovieEntity>> = dao.getAllMovies(movieType)
+    override fun getAllMovies(movieType: MovieType): Flow<List<MovieEntity>> = dao.getAllMovies(movieType.value)
 
     override fun getMovieById(id: Int): Flow<MovieEntity> = dao.getMovieById(id)
 

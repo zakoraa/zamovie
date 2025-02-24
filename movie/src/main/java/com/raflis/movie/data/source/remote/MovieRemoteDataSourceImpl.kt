@@ -16,8 +16,6 @@ class MovieRemoteDataSourceImpl @Inject constructor(private val apiService: Movi
     MovieRemoteDataSource {
     override suspend fun getAllMovies(movieType: MovieType): Flow<ApiResponse<List<MovieResponse>>> {
         return flow {
-            Log.d("getAllMovies", "DIJALANKAN: ")
-
             try {
                 val response = when (movieType) {
                     MovieType.FOR_YOU -> apiService.getMoviesForYou()
@@ -25,12 +23,7 @@ class MovieRemoteDataSourceImpl @Inject constructor(private val apiService: Movi
                     MovieType.POPULAR -> apiService.getMoviesPopular()
                 }
 
-                Log.d("getAllMovies", "Response: ${response}")
-                Log.d("getAllMovies", "Response Code: ${response.results}")
-                Log.d("getAllMovies", "Response Message: ${response.totalPages}")
-                Log.d("getAllMovies", "Response Body: ${response.totalResults}")
                 val dataArray = response.results?.filterNotNull()
-
                 if (!dataArray.isNullOrEmpty()) {
                     emit(ApiResponse.Success(dataArray))
                 } else {

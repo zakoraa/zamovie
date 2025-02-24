@@ -31,6 +31,12 @@ android {
 
         buildConfigField(
             "String",
+            "BASE_URL_IMAGE",
+            "\"https://image.tmdb.org/t/p/w500\""
+        )
+
+        buildConfigField(
+            "String",
             "API_KEY",
             "\"$apiKey\""
         )

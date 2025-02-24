@@ -7,7 +7,6 @@ import kotlinx.parcelize.Parcelize
 data class FavoriteMovie(
     val originalLanguage: String?,
     val title: String?,
-    val genreIds: List<Int?>?,
     val posterPath: String?,
     val releaseDate: String?,
     val popularity: Double?,

@@ -22,9 +22,6 @@ data class MovieEntity(
     @ColumnInfo(name = "title")
     val title: String?,
 
-    @ColumnInfo(name = "genre_ids")
-    val genreIds: List<Int>?,
-
     @ColumnInfo(name = "poster_path")
     val posterPath: String?,
 
