@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.raflis.core.BuildConfig
 import com.raflis.movie.databinding.MovieCardItemBinding
-import com.raflis.movie.presentation.model.MovieModel
+import com.raflis.core.presentation.model.MovieModel
 
 class MovieHorizontalAdapter(private val movies: List<MovieModel>) :
     RecyclerView.Adapter<MovieHorizontalAdapter.MovieViewHolder>() {

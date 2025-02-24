@@ -1,4 +1,4 @@
-package com.raflis.movie.presentation.model
+package com.raflis.core.presentation.model
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 

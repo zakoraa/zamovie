@@ -1,4 +1,4 @@
-package com.raflis.core.presentation
+package com.raflis.core.presentation.screen
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

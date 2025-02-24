@@ -6,11 +6,15 @@ import com.raflis.movie.data.source.local.entity.MovieEntity
 import com.raflis.movie.data.source.remote.response.MovieResponse
 import com.raflis.movie.domain.model.Movie
 import com.raflis.movie.domain.model.MovieType
-import com.raflis.movie.presentation.model.MovieModel
+import com.raflis.core.presentation.model.MovieModel
+import java.util.Locale
 
 object MovieDataMapper {
 
-    fun mapResponsesToEntities(input: List<MovieResponse>, movieType: MovieType): List<MovieEntity> {
+    fun mapResponsesToEntities(
+        input: List<MovieResponse>,
+        movieType: MovieType
+    ): List<MovieEntity> {
         return input.map { mapResponseToEntity(it, movieType) }
     }
 
@@ -94,7 +98,7 @@ object MovieDataMapper {
             backdropPath = input.backdropPath,
             releaseDate = formatDate(input.releaseDate),
             popularity = input.popularity,
-            voteAverage = input.voteAverage
+            voteAverage = String.format(Locale.US, "%.1f", input.voteAverage).toDouble()
         )
     }
 
