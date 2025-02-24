@@ -4,7 +4,6 @@ import android.util.Log
 import com.raflis.core.data.source.remote.network.ApiResponse
 import com.raflis.movie.data.source.remote.network.MovieApiService
 import com.raflis.movie.data.source.remote.response.MovieResponse
-import com.raflis.movie.domain.model.GetMovieByIdParams
 import com.raflis.movie.domain.model.MovieType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -32,18 +31,6 @@ class MovieRemoteDataSourceImpl @Inject constructor(private val apiService: Movi
             } catch (e: Exception) {
                 emit(ApiResponse.Error(e.toString()))
                 Log.e("getAllMovies", e.toString())
-            }
-        }.flowOn(Dispatchers.IO)
-    }
-
-    override suspend fun getMovieById(params: GetMovieByIdParams): Flow<ApiResponse<MovieResponse>> {
-        return flow {
-            try {
-                val response = apiService.getMovieById(params.id)
-                emit(ApiResponse.Success(response))
-            } catch (e: Exception) {
-                emit(ApiResponse.Error(e.toString()))
-                Log.e("getMovieById", e.toString())
             }
         }.flowOn(Dispatchers.IO)
     }

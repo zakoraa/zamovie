@@ -2,7 +2,6 @@ package com.raflis.movie.di
 
 import com.raflis.movie.domain.repository.MovieRepository
 import com.raflis.movie.domain.usecase.GetAllMoviesUseCase
-import com.raflis.movie.domain.usecase.GetMovieByIdUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,12 +18,5 @@ object MovieUseCaseModule {
         repository: MovieRepository
     ): GetAllMoviesUseCase =
         GetAllMoviesUseCase(repository)
-
-    @Provides
-    @ViewModelScoped
-    fun provideGetMovieByIdUseCase(
-        repository: MovieRepository
-    ): GetMovieByIdUseCase =
-        GetMovieByIdUseCase(repository)
 
 }
