@@ -1,6 +1,7 @@
-package com.raflis.core.presentation.adapter
+package com.raflis.movie.presentation.adapter
 
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -8,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.raflis.core.BuildConfig
 import com.raflis.core.databinding.MovieTopRatedCardItemBinding
 import com.raflis.core.presentation.model.MovieModel
+import com.raflis.movie_detail.presentation.screen.MovieDetailActivity
 
 
 class MovieVerticalAdapter(private val movies: List<MovieModel>) :
@@ -17,14 +19,25 @@ class MovieVerticalAdapter(private val movies: List<MovieModel>) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(movie: MovieModel) {
-            binding.tvTitle.text = movie.title ?: "Untitled"
-            binding.tvReleaseDate.text = movie.releaseDate ?: "Unknown"
-            binding.tvRating.text = movie.voteAverage.toString()
+            binding.apply {
+                tvTitle.text = movie.title ?: "Untitled"
+                tvReleaseDate.text = movie.releaseDate ?: "Unknown"
+                tvRating.text = movie.voteAverage.toString()
 
-            Glide.with(binding.root.context)
-                .load("${BuildConfig.BASE_URL_IMAGE}${movie.posterPath}")
-                .centerCrop()
-                .into(binding.ivMoviePoster)
+                Glide.with(root.context)
+                    .load("${BuildConfig.BASE_URL_IMAGE}${movie.posterPath}")
+                    .centerCrop()
+                    .into(ivMoviePoster)
+
+                root.setOnClickListener {
+                    val context = binding.root.context
+                    val intent = Intent(context, MovieDetailActivity::class.java).apply {
+                        putExtra(MovieDetailActivity.EXTRA_MOVIE, movie)
+                    }
+                    context.startActivity(intent)
+                }
+            }
+
         }
     }
 

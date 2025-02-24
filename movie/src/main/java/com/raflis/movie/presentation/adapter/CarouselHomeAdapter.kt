@@ -1,25 +1,38 @@
 package com.raflis.movie.presentation.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.raflis.core.BuildConfig
-import com.raflis.movie.databinding.CarouselHomeItemBinding
 import com.raflis.core.presentation.model.MovieModel
+import com.raflis.movie.databinding.CarouselHomeItemBinding
+import com.raflis.movie_detail.presentation.screen.MovieDetailActivity
 
 class CarouselHomeAdapter(private val movies: List<MovieModel>) :
     RecyclerView.Adapter<CarouselHomeAdapter.CarouselViewHolder>() {
 
     inner class CarouselViewHolder(private val binding: CarouselHomeItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: MovieModel) {
-            binding.tvTitle.text = movie.title ?: "Untitled"
 
-            Glide.with(binding.root.context)
-                .load("${BuildConfig.BASE_URL_IMAGE}${movie.backdropPath}")
-                .centerCrop()
-                .into(binding.ivMoviePoster)
+        fun bind(movie: MovieModel) {
+            binding.apply {
+                tvTitle.text = movie.title ?: "Untitled"
+
+                Glide.with(root.context)
+                    .load("${BuildConfig.BASE_URL_IMAGE}${movie.backdropPath}")
+                    .centerCrop()
+                    .into(ivMoviePoster)
+
+                root.setOnClickListener {
+                    val context = root.context
+                    val intent = Intent(context, MovieDetailActivity::class.java).apply {
+                        putExtra(MovieDetailActivity.EXTRA_MOVIE, movie)
+                    }
+                    context.startActivity(intent)
+                }
+            }
         }
     }
 

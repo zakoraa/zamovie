@@ -3,8 +3,9 @@ import java.util.Properties
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.hiltAndroid)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -77,10 +78,13 @@ dependencies {
     api(libs.recyclerview)
     api(libs.glide)
 
-    api(libs.room.runtime)
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
+
+    implementation(libs.room.runtime)
     ksp(libs.room.compiler)
-    api(libs.room.testing)
-    api(libs.androidx.room.ktx)
+    implementation(libs.room.testing)
+    implementation(libs.androidx.room.ktx)
 
     api(libs.material)
     api(libs.androidx.activity)
@@ -93,6 +97,4 @@ dependencies {
     api(libs.kotlinx.coroutines.android)
     api(libs.androidx.lifecycle.livedata.ktx)
 
-    api(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
 }

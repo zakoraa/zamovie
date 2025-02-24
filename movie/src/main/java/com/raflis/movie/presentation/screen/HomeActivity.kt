@@ -5,7 +5,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.raflis.core.databinding.ActivityBaseScreenBinding
-import com.raflis.core.presentation.adapter.MovieVerticalAdapter
+import com.raflis.movie.presentation.adapter.MovieVerticalAdapter
 import com.raflis.core.presentation.screen.BaseScreenActivity
 import com.raflis.core.util.Resource
 import com.raflis.movie.databinding.ActivityHomeBinding

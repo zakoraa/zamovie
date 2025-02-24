@@ -41,6 +41,7 @@ android {
 
 dependencies {
     implementation(project(":core"))
+    implementation(project(":movie_detail"))
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
@@ -49,10 +50,4 @@ dependencies {
     ksp(libs.room.compiler)
     implementation(libs.room.testing)
     implementation(libs.androidx.room.ktx)
-
-
-//    implementation(libs.androidx.appcompat)
-//    implementation(libs.material)
-//    implementation(libs.androidx.activity)
-//    implementation(libs.androidx.constraintlayout)
 }

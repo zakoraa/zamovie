@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface MovieDetailDao {
 
-    @Query("SELECT * FROM movie_detail WHERE id = :id")
+    @Query("SELECT * FROM movie_detail WHERE movie_id = :id")
     fun getMovieDetailById(id: Int): Flow<MovieDetailEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

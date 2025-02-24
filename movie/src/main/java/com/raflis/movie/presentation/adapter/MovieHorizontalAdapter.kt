@@ -1,12 +1,14 @@
 package com.raflis.movie.presentation.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.raflis.core.BuildConfig
-import com.raflis.movie.databinding.MovieCardItemBinding
 import com.raflis.core.presentation.model.MovieModel
+import com.raflis.movie.databinding.MovieCardItemBinding
+import com.raflis.movie_detail.presentation.screen.MovieDetailActivity
 
 class MovieHorizontalAdapter(private val movies: List<MovieModel>) :
     RecyclerView.Adapter<MovieHorizontalAdapter.MovieViewHolder>() {
@@ -22,6 +24,14 @@ class MovieHorizontalAdapter(private val movies: List<MovieModel>) :
                     .load("${BuildConfig.BASE_URL_IMAGE}${movie.posterPath}")
                     .centerCrop()
                     .into(ivMoviePoster)
+
+                root.setOnClickListener {
+                    val context = binding.root.context
+                    val intent = Intent(context, MovieDetailActivity::class.java).apply {
+                        putExtra(MovieDetailActivity.EXTRA_MOVIE, movie)
+                    }
+                    context.startActivity(intent)
+                }
             }
         }
     }

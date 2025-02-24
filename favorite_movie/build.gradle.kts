@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.dynamic.feature)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.hiltAndroid)
+    alias(libs.plugins.ksp)
 }
 android {
     namespace = "com.raflis.zamovie.favorite_movie"
@@ -37,4 +39,12 @@ dependencies {
     implementation(project(":app"))
     implementation(project(":core"))
 
+
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
+
+    implementation(libs.room.runtime)
+    ksp(libs.room.compiler)
+    implementation(libs.room.testing)
+    implementation(libs.androidx.room.ktx)
 }

@@ -1,0 +1,6 @@
+<resources>
+    <string name="iv_back_desc">back from movie detail screen</string>
+    <string name="iv_movie_poster_desc">movie poster</string>
+    <string name="iv_favorite_desc">icon favorite</string>
+    <string name="iv_star_desc">icon star</string>
+</resources>
