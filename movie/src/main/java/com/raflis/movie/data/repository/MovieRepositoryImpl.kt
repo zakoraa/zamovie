@@ -13,8 +13,9 @@ import com.raflis.movie.domain.repository.MovieRepository
 import com.raflis.movie.util.MovieDataMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class MovieRepositoryImpl(
+class MovieRepositoryImpl @Inject constructor(
     private val remoteDataSource: MovieRemoteDataSource,
     private val localDataSource: MovieLocalDataSource,
 ) : MovieRepository {

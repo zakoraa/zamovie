@@ -60,9 +60,9 @@ android {
 
 dependencies {
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.constraintlayout)
+    api(libs.androidx.core.ktx)
+    api(libs.androidx.appcompat)
+    api(libs.androidx.constraintlayout)
     api(libs.junit)
     api(libs.androidx.junit)
     api(libs.androidx.espresso.core)
@@ -72,15 +72,18 @@ dependencies {
     api(libs.glide)
 
     api(libs.room.runtime)
-    implementation(libs.material)
-    implementation(libs.androidx.activity)
     ksp(libs.room.compiler)
     api(libs.room.testing)
+    api(libs.androidx.room.ktx)
+
+    api(libs.material)
+    api(libs.androidx.activity)
 
     api(libs.retrofit)
     api(libs.converter.gson)
     api(libs.logging.interceptor)
 
+    api(libs.kotlinx.coroutines.core)
     api(libs.kotlinx.coroutines.android)
     api(libs.androidx.lifecycle.livedata.ktx)
 

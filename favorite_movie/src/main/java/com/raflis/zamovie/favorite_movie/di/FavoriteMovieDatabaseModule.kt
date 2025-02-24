@@ -2,6 +2,8 @@ package com.raflis.zamovie.favorite_movie.di
 
 import android.content.Context
 import androidx.room.Room
+import com.raflis.zamovie.favorite_movie.data.source.local.FavoriteMovieLocalDataSource
+import com.raflis.zamovie.favorite_movie.data.source.local.FavoriteMovieLocalDataSourceImpl
 import com.raflis.zamovie.favorite_movie.data.source.local.room.FavoriteMovieDao
 import com.raflis.zamovie.favorite_movie.data.source.local.room.FavoriteMovieDatabase
 import dagger.Module
@@ -13,7 +15,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class FavoriteMovieDatabaseModule {
+object FavoriteMovieDatabaseModule {
 
     @Singleton
     @Provides
@@ -23,7 +25,13 @@ class FavoriteMovieDatabaseModule {
             FavoriteMovieDatabase::class.java, "favorite_movie.db"
         ).fallbackToDestructiveMigration().build()
 
+    @Singleton
     @Provides
     fun provideFavoriteMovieDao(database: FavoriteMovieDatabase): FavoriteMovieDao =
         database.favoriteMovieDao()
+
+    @Singleton
+    @Provides
+    fun provideFavoriteMovieLocalDataSource(favoriteMovieDao: FavoriteMovieDao): FavoriteMovieLocalDataSource =
+        FavoriteMovieLocalDataSourceImpl(favoriteMovieDao)
 }

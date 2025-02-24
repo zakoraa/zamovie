@@ -38,6 +38,7 @@
 
         <TextView
             android:id="@+id/tv_desc"
+            style="@style/TextDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
@@ -54,6 +55,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_desc" />
+
+        <ProgressBar
+            android:id="@+id/progress_carousel_home"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/rv_carousel_home" />
 
         <TextView
             android:id="@+id/tv_for_you"
@@ -75,6 +85,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_for_you" />
 
+        <ProgressBar
+            android:id="@+id/progress_for_you"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/rv_carousel_for_you" />
+
         <TextView
             android:id="@+id/tv_popular"
             style="@style/TextHeading1"
@@ -95,6 +114,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_popular" />
 
+        <ProgressBar
+            android:id="@+id/progress_popular"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/rv_carousel_popular" />
+
         <TextView
             android:id="@+id/tv_top_rated"
             style="@style/TextHeading1"
@@ -114,6 +142,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_top_rated" />
+
+        <ProgressBar
+            android:id="@+id/progress_top_rated"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/rv_carousel_top_rated" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

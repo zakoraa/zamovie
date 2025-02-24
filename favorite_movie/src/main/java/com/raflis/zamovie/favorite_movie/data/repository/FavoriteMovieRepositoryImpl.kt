@@ -6,8 +6,9 @@ import com.raflis.zamovie.favorite_movie.domain.repository.FavoriteMovieReposito
 import com.raflis.zamovie.favorite_movie.util.FavoriteMovieDataMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class FavoriteMovieRepositoryImpl(
+class FavoriteMovieRepositoryImpl @Inject constructor(
     private val localDataSource: FavoriteMovieLocalDataSource,
 ) : FavoriteMovieRepository {
     override fun getAllFavoriteMovies(): Flow<List<FavoriteMovie>> {

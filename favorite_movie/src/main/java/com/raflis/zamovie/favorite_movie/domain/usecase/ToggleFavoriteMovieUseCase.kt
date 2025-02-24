@@ -1,13 +1,12 @@
 package com.raflis.zamovie.favorite_movie.domain.usecase
 
-import com.raflis.core.domain.usecase.UseCase
 import com.raflis.zamovie.favorite_movie.domain.model.FavoriteMovie
 import com.raflis.zamovie.favorite_movie.domain.repository.FavoriteMovieRepository
+import javax.inject.Inject
 
-class ToggleFavoriteMovieUseCase(private val repository: FavoriteMovieRepository) :
-    UseCase<FavoriteMovie, Unit> {
+class ToggleFavoriteMovieUseCase @Inject constructor(private val repository: FavoriteMovieRepository) {
 
-    override suspend fun invoke(params: FavoriteMovie) {
+    suspend fun invoke(params: FavoriteMovie) {
         return repository.toggleFavoriteMovie(params)
     }
 }

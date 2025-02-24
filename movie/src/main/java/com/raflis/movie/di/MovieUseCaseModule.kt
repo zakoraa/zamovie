@@ -2,29 +2,29 @@ package com.raflis.movie.di
 
 import com.raflis.movie.domain.repository.MovieRepository
 import com.raflis.movie.domain.usecase.GetAllMoviesUseCase
-import com.raflis.movie.domain.usecase.GetMovieById
+import com.raflis.movie.domain.usecase.GetMovieByIdUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.scopes.ViewModelScoped
 
 @Module(includes = [MovieRepositoryModule::class])
-@InstallIn(SingletonComponent::class)
-class MovieUseCaseModule {
+@InstallIn(ViewModelComponent::class)
+object MovieUseCaseModule {
 
-    @Singleton
     @Provides
+    @ViewModelScoped
     fun provideGetAllMoviesUseCase(
         repository: MovieRepository
     ): GetAllMoviesUseCase =
         GetAllMoviesUseCase(repository)
 
-    @Singleton
     @Provides
+    @ViewModelScoped
     fun provideGetMovieByIdUseCase(
         repository: MovieRepository
-    ): GetMovieById =
-        GetMovieById(repository)
+    ): GetMovieByIdUseCase =
+        GetMovieByIdUseCase(repository)
 
 }

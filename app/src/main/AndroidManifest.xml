@@ -5,8 +5,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+<!--        android:name="com.google.android.play.core.splitcompat.SplitCompatApplication"-->
     <application
-        android:name="com.google.android.play.core.splitcompat.SplitCompatApplication"
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"

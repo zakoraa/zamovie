@@ -18,8 +18,8 @@ interface FavoriteMovieDao {
     fun getFavoriteMovieById(id: Int): Flow<FavoriteMovieEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertFavoriteMovie(favoriteMovie: FavoriteMovieEntity)
+    fun insertFavoriteMovie(favoriteMovie: FavoriteMovieEntity)
 
     @Delete
-    suspend fun deleteFavoriteMovie(favoriteMovie: FavoriteMovieEntity)
+    fun deleteFavoriteMovie(favoriteMovie: FavoriteMovieEntity)
 }

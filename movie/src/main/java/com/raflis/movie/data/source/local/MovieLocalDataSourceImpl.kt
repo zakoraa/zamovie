@@ -4,8 +4,9 @@ import com.raflis.movie.data.source.local.entity.MovieEntity
 import com.raflis.movie.data.source.local.room.MovieDao
 import com.raflis.movie.domain.model.MovieType
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class MovieLocalDataSourceImpl(private val dao: MovieDao) : MovieLocalDataSource {
+class MovieLocalDataSourceImpl @Inject constructor(private val dao: MovieDao) : MovieLocalDataSource {
     override fun getAllMovies(movieType: MovieType): Flow<List<MovieEntity>> = dao.getAllMovies(movieType)
 
     override fun getMovieById(id: Int): Flow<MovieEntity> = dao.getMovieById(id)

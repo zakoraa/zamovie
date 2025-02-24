@@ -7,20 +7,18 @@ import com.raflis.movie.domain.repository.MovieRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.scopes.ViewModelScoped
 
+@Module
+@InstallIn(ViewModelComponent::class)
+object MovieRepositoryModule {
 
-@Module(includes = [MovieNetworkModule::class, MovieDatabaseModule::class])
-@InstallIn(SingletonComponent::class)
-class MovieRepositoryModule {
-
-    @Singleton
+    @ViewModelScoped
     @Provides
     fun provideRepository(
         remote: MovieRemoteDataSource,
         local: MovieLocalDataSource,
     ): MovieRepository =
         MovieRepositoryImpl(remote, local)
-
 }

@@ -6,12 +6,12 @@ import com.raflis.zamovie.favorite_movie.domain.usecase.ToggleFavoriteMovieUseCa
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import dagger.hilt.android.components.ViewModelComponent
 import javax.inject.Singleton
 
 @Module(includes = [FavoriteMovieRepositoryModule::class])
-@InstallIn(SingletonComponent::class)
-class FavoriteMovieUseCaseModule {
+@InstallIn(ViewModelComponent::class)
+object FavoriteMovieUseCaseModule {
 
     @Singleton
     @Provides

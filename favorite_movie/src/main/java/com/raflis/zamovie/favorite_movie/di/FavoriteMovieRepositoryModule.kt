@@ -12,12 +12,12 @@ import javax.inject.Singleton
 
 @Module(includes = [FavoriteMovieDatabaseModule::class])
 @InstallIn(SingletonComponent::class)
-class FavoriteMovieRepositoryModule {
+object FavoriteMovieRepositoryModule {
 
     @Singleton
     @Provides
     fun provideRepository(
-        local: FavoriteMovieLocalDataSource
+        local: FavoriteMovieLocalDataSource,
     ): FavoriteMovieRepository =
         FavoriteMovieRepositoryImpl(local)
 
