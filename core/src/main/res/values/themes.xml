@@ -23,4 +23,22 @@
     </style>
 
     <style name="Theme.Zamovie" parent="Base.Theme.Zamovie" />
+
+    <style name="TextTitle">
+        <item name="android:textSize">20sp</item>
+        <item name="fontFamily">@font/poppinsmedium</item>
+    </style>
+
+    <style name="TextHeading1" parent="TextTitle">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextHeading2" parent="TextTitle">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="TextDescription">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/grey</item>
+    </style>
 </resources>
