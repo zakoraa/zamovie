@@ -3,15 +3,16 @@ package com.raflis.movie.util
 import com.raflis.movie.data.source.local.entity.MovieEntity
 import com.raflis.movie.data.source.remote.response.MovieResponse
 import com.raflis.movie.domain.model.Movie
+import com.raflis.movie.domain.model.MovieType
 
 object MovieDataMapper {
 
-    fun mapResponsesToEntities(input: List<MovieResponse>): List<MovieEntity> {
-        return input.map { mapResponseToEntity(it) }
+    fun mapResponsesToEntities(input: List<MovieResponse>, movieType: MovieType): List<MovieEntity> {
+        return input.map { mapResponseToEntity(it, movieType) }
     }
 
     // Convert dari Remote API Response ke Database Entity
-    fun mapResponseToEntity(input: MovieResponse): MovieEntity {
+    fun mapResponseToEntity(input: MovieResponse, movieType: MovieType): MovieEntity {
         return MovieEntity(
             id = input.id ?: 0,
             overview = input.overview ?: "",
@@ -23,7 +24,8 @@ object MovieDataMapper {
             backdropPath = input.backdropPath ?: "",
             releaseDate = input.releaseDate ?: "",
             popularity = input.popularity ?: 0.0,
-            voteAverage = input.voteAverage ?: 0.0
+            voteAverage = input.voteAverage ?: 0.0,
+            type = movieType.value
         )
     }
 
@@ -47,7 +49,7 @@ object MovieDataMapper {
     }
 
     // Convert dari Domain Model ke Entity untuk penyimpanan ke Database
-    fun mapDomainToEntity(input: Movie): MovieEntity {
+    fun mapDomainToEntity(input: Movie, movieType: MovieType): MovieEntity {
         return MovieEntity(
             id = input.id ?: 0,
             overview = input.overview ?: "",
@@ -59,7 +61,8 @@ object MovieDataMapper {
             backdropPath = input.backdropPath ?: "",
             releaseDate = input.releaseDate ?: "",
             popularity = input.popularity ?: 0.0,
-            voteAverage = input.voteAverage ?: 0.0
+            voteAverage = input.voteAverage ?: 0.0,
+            type = movieType.value
         )
     }
 

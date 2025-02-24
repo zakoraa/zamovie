@@ -1,10 +1,11 @@
 package com.raflis.movie.data.source.local
 
 import com.raflis.movie.data.source.local.entity.MovieEntity
+import com.raflis.movie.domain.model.MovieType
 import kotlinx.coroutines.flow.Flow
 
 interface MovieLocalDataSource {
-    fun getAllMovies(): Flow<List<MovieEntity>>
+    fun getAllMovies(movieType: MovieType): Flow<List<MovieEntity>>
     fun getMovieById(id: Int): Flow<MovieEntity>
     suspend fun insertMovies(movieList: List<MovieEntity>)
     suspend fun updateMovie(movie: MovieEntity)

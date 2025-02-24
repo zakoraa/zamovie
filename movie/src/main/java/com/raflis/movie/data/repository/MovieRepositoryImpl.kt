@@ -1,12 +1,14 @@
 package com.raflis.movie.data.repository
 
 import com.raflis.core.data.NetworkBoundResource
-import com.raflis.core.util.Resource
 import com.raflis.core.data.source.remote.network.ApiResponse
+import com.raflis.core.util.Resource
 import com.raflis.movie.data.source.local.MovieLocalDataSource
 import com.raflis.movie.data.source.remote.MovieRemoteDataSource
 import com.raflis.movie.data.source.remote.response.MovieResponse
+import com.raflis.movie.domain.model.GetMovieByIdParams
 import com.raflis.movie.domain.model.Movie
+import com.raflis.movie.domain.model.MovieType
 import com.raflis.movie.domain.repository.MovieRepository
 import com.raflis.movie.util.MovieDataMapper
 import kotlinx.coroutines.flow.Flow
@@ -16,10 +18,10 @@ class MovieRepositoryImpl(
     private val remoteDataSource: MovieRemoteDataSource,
     private val localDataSource: MovieLocalDataSource,
 ) : MovieRepository {
-    override fun getAllMovies(): Flow<Resource<List<Movie>>> =
+    override fun getAllMovies(movieType: MovieType): Flow<Resource<List<Movie>>> =
         object : NetworkBoundResource<List<Movie>, List<MovieResponse>>() {
             override fun loadFromDB(): Flow<List<Movie>> {
-                return localDataSource.getAllMovies().map {
+                return localDataSource.getAllMovies(movieType).map {
                     MovieDataMapper.mapEntitiesToDomain(it)
                 }
             }
@@ -28,18 +30,18 @@ class MovieRepositoryImpl(
                 data.isNullOrEmpty()
 
             override suspend fun createCall(): Flow<ApiResponse<List<MovieResponse>>> =
-                remoteDataSource.getAllMovies()
+                remoteDataSource.getAllMovies(movieType)
 
             override suspend fun saveCallResult(data: List<MovieResponse>) {
-                val tourismList = MovieDataMapper.mapResponsesToEntities(data)
+                val tourismList = MovieDataMapper.mapResponsesToEntities(data, movieType)
                 localDataSource.insertMovies(tourismList)
             }
         }.asFlow()
 
-    override fun getMovieById(id: Int): Flow<Resource<Movie>> =
+    override fun getMovieById(params: GetMovieByIdParams): Flow<Resource<Movie>> =
         object : NetworkBoundResource<Movie, MovieResponse>() {
             override fun loadFromDB(): Flow<Movie> {
-                return localDataSource.getMovieById(id).map {
+                return localDataSource.getMovieById(params.id).map {
                     MovieDataMapper.mapEntityToDomain(it)
                 }
             }
@@ -48,10 +50,10 @@ class MovieRepositoryImpl(
                 data == null
 
             override suspend fun createCall(): Flow<ApiResponse<MovieResponse>> =
-                remoteDataSource.getMovieById(id)
+                remoteDataSource.getMovieById(params)
 
             override suspend fun saveCallResult(data: MovieResponse) {
-                val movieEntity = MovieDataMapper.mapResponseToEntity(data)
+                val movieEntity = MovieDataMapper.mapResponseToEntity(data, params.movieType)
                 localDataSource.updateMovie(movieEntity)
             }
         }.asFlow()

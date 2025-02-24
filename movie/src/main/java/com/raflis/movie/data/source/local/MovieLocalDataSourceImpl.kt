@@ -2,10 +2,11 @@ package com.raflis.movie.data.source.local
 
 import com.raflis.movie.data.source.local.entity.MovieEntity
 import com.raflis.movie.data.source.local.room.MovieDao
+import com.raflis.movie.domain.model.MovieType
 import kotlinx.coroutines.flow.Flow
 
 class MovieLocalDataSourceImpl(private val dao: MovieDao) : MovieLocalDataSource {
-    override fun getAllMovies(): Flow<List<MovieEntity>> = dao.getAllMovies()
+    override fun getAllMovies(movieType: MovieType): Flow<List<MovieEntity>> = dao.getAllMovies(movieType)
 
     override fun getMovieById(id: Int): Flow<MovieEntity> = dao.getMovieById(id)
 

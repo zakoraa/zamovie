@@ -4,16 +4,22 @@ import android.util.Log
 import com.raflis.core.data.source.remote.network.ApiResponse
 import com.raflis.movie.data.source.remote.network.MovieApiService
 import com.raflis.movie.data.source.remote.response.MovieResponse
+import com.raflis.movie.domain.model.MovieType
+import com.raflis.movie.domain.model.GetMovieByIdParams
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
 class MovieRemoteDataSourceImpl(private val apiService: MovieApiService) : MovieRemoteDataSource {
-    override suspend fun getAllMovies(): Flow<ApiResponse<List<MovieResponse>>> {
+    override suspend fun getAllMovies(movieType: MovieType): Flow<ApiResponse<List<MovieResponse>>> {
         return flow {
             try {
-                val response = apiService.getMovieList()
+                val response = when (movieType) {
+                    MovieType.FOR_YOU -> apiService.getMoviesForYou()
+                    MovieType.TOP_RATED -> apiService.getMoviesTopRated()
+                    MovieType.POPULAR -> apiService.getMoviesPopular()
+                }
                 val dataArray = response.results?.filterNotNull()
 
                 if (!dataArray.isNullOrEmpty()) {
@@ -28,10 +34,10 @@ class MovieRemoteDataSourceImpl(private val apiService: MovieApiService) : Movie
         }.flowOn(Dispatchers.IO)
     }
 
-    override suspend fun getMovieById(id: Int): Flow<ApiResponse<MovieResponse>> {
+    override suspend fun getMovieById(params: GetMovieByIdParams): Flow<ApiResponse<MovieResponse>> {
         return flow {
             try {
-                val response = apiService.getMovieById(id)
+                val response = apiService.getMovieById(params.id)
                 emit(ApiResponse.Success(response))
             } catch (e: Exception) {
                 emit(ApiResponse.Error(e.toString()))

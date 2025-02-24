@@ -41,4 +41,8 @@
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/grey</item>
     </style>
+
+    <style name="CustomProgressBar">
+        <item name="android:progressTint">@color/primary</item>
+    </style>
 </resources>
