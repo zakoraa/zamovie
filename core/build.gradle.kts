@@ -96,4 +96,5 @@ dependencies {
     api(libs.kotlinx.coroutines.android)
     api(libs.androidx.lifecycle.livedata.ktx)
 
+    api(libs.feature.delivery.ktx)
 }

@@ -52,5 +52,4 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
 
-    implementation(libs.feature.delivery.ktx)
 }

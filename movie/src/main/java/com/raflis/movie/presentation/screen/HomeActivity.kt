@@ -1,11 +1,13 @@
 package com.raflis.movie.presentation.screen
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
+import com.google.android.play.core.splitinstall.SplitInstallRequest
 import com.raflis.core.databinding.ActivityBaseScreenBinding
 import com.raflis.core.presentation.screen.BaseScreenActivity
 import com.raflis.core.util.Resource
@@ -48,10 +50,36 @@ class HomeActivity : BaseScreenActivity() {
     private fun initAction() {
         homeBinding.apply {
             ivFavorite.setOnClickListener {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("zamovie://favorite"))
-                startActivity(intent)
+                try {
+                    installFavoriteMovieModule()
+                } catch (e: Exception) {
+                    ToastUtil.showToast(this@HomeActivity, "Module not found")
+                }
             }
         }
+    }
+    private fun installFavoriteMovieModule() {
+        val splitInstallManager = SplitInstallManagerFactory.create(this)
+        val moduleFavoriteMovie = "favorite_movie"
+        if (splitInstallManager.installedModules.contains(moduleFavoriteMovie)) {
+            moveToFavoriteMovieActivity()
+        } else {
+            val request = SplitInstallRequest.newBuilder()
+                .addModule(moduleFavoriteMovie)
+                .build()
+            splitInstallManager.startInstall(request)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Success installing module", Toast.LENGTH_SHORT).show()
+                    moveToFavoriteMovieActivity()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Error installing module", Toast.LENGTH_SHORT).show()
+                }
+        }
+    }
+
+    private fun moveToFavoriteMovieActivity() {
+        startActivity(Intent(this, Class.forName("com.raflis.zamovie.favorite_movie.presentation.screen.FavoriteMovieActivity")))
     }
 
     private fun handleGetMoviesForYou() {

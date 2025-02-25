@@ -15,17 +15,8 @@
     <application android:allowBackup="true">
         <meta-data
             android:name="dagger.hilt.android.internal.modules.ApplicationContextModule"
-            android:value="com.raflis.zamovie.MyApplication"/>
-        <activity
-            android:name=".presentation.screen.FavoriteMovieActivity"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="zamovie" android:host="favorite" />
-            </intent-filter>
-        </activity>
+            android:value="com.raflis.zamovie.MyApplication" />
+        <activity android:name=".presentation.screen.FavoriteMovieActivity" android:exported="true" />
     </application>
 
 </manifest>
