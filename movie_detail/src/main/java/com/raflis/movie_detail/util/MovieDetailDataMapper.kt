@@ -1,6 +1,5 @@
 package com.raflis.movie_detail.util
 
-import android.util.Log
 import com.raflis.movie_detail.data.source.local.entity.MovieDetailEntity
 import com.raflis.movie_detail.data.source.remote.response.MovieDetailResponse
 import com.raflis.movie_detail.domain.model.MovieDetail
@@ -25,17 +24,17 @@ object MovieDetailDataMapper {
     }
 
     // **2. Convert dari Domain ke UI Model**
-    fun mapDomainToPresentation(input: MovieDetail): MovieDetailModel {
+    fun mapDomainToPresentation(input: MovieDetail?): MovieDetailModel {
         return MovieDetailModel(
-            id = input.id ?: 0,
-            originalTitle = input.originalTitle.orEmpty(),
-            title = input.title.orEmpty(),
-            overview = input.overview.orEmpty(),
-            posterPath = input.posterPath.orEmpty(),
-            releaseDate = input.releaseDate.orEmpty(),
-            voteAverage = String.format(Locale.US, "%.1f", input.voteAverage ?: 0.0).toDouble(),
-            homepage = input.homepage.orEmpty(),
-            status = input.status.orEmpty()
+            id = input?.id ?: 0,
+            originalTitle = input?.originalTitle.orEmpty(),
+            title = input?.title.orEmpty(),
+            overview = input?.overview.orEmpty(),
+            posterPath = input?.posterPath.orEmpty(),
+            releaseDate = input?.releaseDate.orEmpty(),
+            voteAverage = String.format(Locale.US, "%.1f", input?.voteAverage ?: 0.0).toDouble(),
+            homepage = input?.homepage.orEmpty(),
+            status = input?.status.orEmpty()
         )
     }
 
@@ -56,9 +55,8 @@ object MovieDetailDataMapper {
 
     // **4. Convert dari Entity ke Domain Model**
     fun mapEntityToDomain(input: MovieDetailEntity?): MovieDetail {
-        Log.d("FLORAAAAAA", "mapEntityToDomain input: $input")
         return MovieDetail(
-            id = input?.id ?: 0,
+            id = input?.id,
             originalTitle = input?.originalTitle.orEmpty(),
             title = input?.title.orEmpty(),
             overview = input?.overview.orEmpty(),

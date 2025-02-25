@@ -1,7 +1,7 @@
 package com.raflis.movie_detail.domain.model
 
 data class MovieDetail(
-    val id: Int,
+    val id: Int?,
     val title: String?,
     val overview: String?,
     val originalTitle: String?,

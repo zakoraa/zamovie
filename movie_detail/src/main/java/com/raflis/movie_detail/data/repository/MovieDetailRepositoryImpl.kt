@@ -1,6 +1,5 @@
 package com.raflis.movie_detail.data.repository
 
-import android.util.Log
 import com.raflis.core.data.NetworkBoundResource
 import com.raflis.core.data.source.remote.network.ApiResponse
 import com.raflis.core.util.Resource
@@ -28,14 +27,10 @@ class MovieDetailRepositoryImpl @Inject constructor(
                 }
             }
 
-            override fun shouldFetch(data: MovieDetail?): Boolean =
-                data == null
+            override fun shouldFetch(data: MovieDetail?): Boolean = data?.id == null
 
-            override suspend fun createCall(): Flow<ApiResponse<MovieDetailResponse>> {
-                Log.d("FLORAAAAA", "createCall:${id} ")
-              return  remoteDataSource.getMovieDetailById(id)
-
-            }
+            override suspend fun createCall(): Flow<ApiResponse<MovieDetailResponse>> =
+                remoteDataSource.getMovieDetailById(id)
 
             override suspend fun saveCallResult(data: MovieDetailResponse) {
                 val movieEntity = MovieDetailDataMapper.mapResponseToEntity(data)

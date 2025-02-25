@@ -14,7 +14,9 @@ import com.raflis.core.util.Resource
 import com.raflis.movie_detail.R
 import com.raflis.movie_detail.databinding.ActivityMovieDetailBinding
 import com.raflis.movie_detail.presentation.view_model.MovieDetailViewModel
+import com.raflis.movie_detail.util.MovieDetailDataMapper.mapDomainToPresentation
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Locale
 
 @AndroidEntryPoint
 class MovieDetailActivity : AppCompatActivity() {
@@ -29,6 +31,7 @@ class MovieDetailActivity : AppCompatActivity() {
         binding = ActivityMovieDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initView()
+        initAction()
     }
 
     private fun initView() {
@@ -47,6 +50,14 @@ class MovieDetailActivity : AppCompatActivity() {
         }
     }
 
+    private fun initAction() {
+        binding.apply {
+            ivBack.setOnClickListener {
+                finish()
+            }
+        }
+    }
+
     private fun handleGetMovieDetailById(id: Int) {
         movieDetailViewModel.getMovieDetailById(id).observe(this) { movieDetail ->
             if (movieDetail != null) {
@@ -57,13 +68,16 @@ class MovieDetailActivity : AppCompatActivity() {
 
                         is Resource.Success -> {
                             showMoviesForYouLoading(false)
-                            val movie = movieDetail.data
+                            val movie = mapDomainToPresentation(movieDetail.data)
                             tvTitle.text =
-                                "${movie?.title} (${extractYear(movie?.releaseDate)})" ?: ""
-                            tvDesc.text = movie?.overview ?: ""
-                            tvRating.text = movie?.voteAverage.toString()
+                                String.format(
+                                    Locale.US,
+                                    "${movie.title} (${extractYear(movie.releaseDate)})"
+                                )
+                            tvDesc.text = movie.overview
+                            tvRating.text = String.format(Locale.US, movie.voteAverage.toString())
                             Glide.with(root.context)
-                                .load("${BuildConfig.BASE_URL_IMAGE}${movie?.posterPath}")
+                                .load("${BuildConfig.BASE_URL_IMAGE}${movie.posterPath}")
                                 .centerCrop()
                                 .into(ivMoviePoster)
                         }

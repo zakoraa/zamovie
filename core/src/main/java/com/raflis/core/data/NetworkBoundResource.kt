@@ -22,11 +22,14 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
                         Resource.Success(it)
                     })
                 }
+
                 is ApiResponse.Empty -> {
+
                     emitAll(loadFromDB().map {
                         Resource.Success(it)
                     })
                 }
+
                 is ApiResponse.Error -> {
                     onFetchFailed()
                     emit(
@@ -35,6 +38,7 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
                 }
             }
         } else {
+
             emitAll(loadFromDB().map {
                 Resource.Success(it)
             })
