@@ -4,9 +4,8 @@ import com.raflis.zamovie.favorite_movie.data.source.local.entity.FavoriteMovieE
 import com.raflis.zamovie.favorite_movie.data.source.local.room.FavoriteMovieDao
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
-import javax.inject.Inject
 
-class FavoriteMovieLocalDataSourceImpl @Inject constructor(private val dao: FavoriteMovieDao) :
+class FavoriteMovieLocalDataSourceImpl(private val dao: FavoriteMovieDao) :
     FavoriteMovieLocalDataSource {
     override fun getAllFavoriteMovies(): Flow<List<FavoriteMovieEntity>> {
         return dao.getAllFavoriteMovies()

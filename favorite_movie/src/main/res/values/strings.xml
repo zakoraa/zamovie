@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="your_favorite">Your Favorite</string>
+    <string name="iv_back_desc">back from favorite movie screen</string>
 </resources>

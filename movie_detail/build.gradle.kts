@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.raflis.movie_detail"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 24
