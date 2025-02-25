@@ -6,5 +6,4 @@ plugins {
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.hiltAndroid) apply false
     alias(libs.plugins.android.dynamic.feature) apply false
-    alias(libs.plugins.kotlin.parcelize) apply false
 }

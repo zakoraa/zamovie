@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.android.dynamic.feature)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.hiltAndroid)
     alias(libs.plugins.ksp)
 }
@@ -38,9 +37,13 @@ android {
 dependencies {
     implementation(project(":app"))
     implementation(project(":core"))
-
+    implementation(project(":movie_detail"))
 
     implementation(libs.hilt.android)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.constraintlayout)
     ksp(libs.hilt.android.compiler)
 
     implementation(libs.room.runtime)

@@ -1,6 +1,6 @@
-package com.raflis.zamovie.favorite_movie.domain.model
+package com.raflis.zamovie.favorite_movie.presentation.model
 
-data class FavoriteMovie(
+data class FavoriteMovieModel(
     val originalLanguage: String?,
     val title: String?,
     val posterPath: String?,

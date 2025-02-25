@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Update
 import com.raflis.movie.data.source.local.entity.MovieEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -17,6 +16,4 @@ interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMovies(movie: List<MovieEntity>)
 
-    @Update
-    suspend fun updateMovie(movie: MovieEntity)
 }

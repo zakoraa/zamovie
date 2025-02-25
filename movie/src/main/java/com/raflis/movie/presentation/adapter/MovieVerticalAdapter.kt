@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.raflis.core.BuildConfig
 import com.raflis.core.databinding.MovieTopRatedCardItemBinding
-import com.raflis.core.presentation.model.MovieModel
+import com.raflis.movie.presentation.model.MovieModel
 import com.raflis.movie_detail.presentation.screen.MovieDetailActivity
 
 
@@ -32,7 +32,7 @@ class MovieVerticalAdapter(private val movies: List<MovieModel>) :
                 root.setOnClickListener {
                     val context = binding.root.context
                     val intent = Intent(context, MovieDetailActivity::class.java).apply {
-                        putExtra(MovieDetailActivity.EXTRA_MOVIE, movie)
+                        putExtra(MovieDetailActivity.MOVIE_ID, movie.id)
                     }
                     context.startActivity(intent)
                 }

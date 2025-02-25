@@ -6,7 +6,7 @@ import com.raflis.movie.data.source.local.entity.MovieEntity
 import com.raflis.movie.data.source.remote.response.MovieResponse
 import com.raflis.movie.domain.model.Movie
 import com.raflis.movie.domain.model.MovieType
-import com.raflis.core.presentation.model.MovieModel
+import com.raflis.movie.presentation.model.MovieModel
 import java.util.Locale
 
 object MovieDataMapper {

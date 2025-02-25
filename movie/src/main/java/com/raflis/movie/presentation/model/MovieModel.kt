@@ -1,8 +1,5 @@
-package com.raflis.core.presentation.model
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+package com.raflis.movie.presentation.model
 
-@Parcelize
 data class MovieModel(
     val overview: String?,
     val originalLanguage: String?,
@@ -14,4 +11,4 @@ data class MovieModel(
     val popularity: Double?,
     val voteAverage: Double?,
     val id: Int?,
-) : Parcelable
+)

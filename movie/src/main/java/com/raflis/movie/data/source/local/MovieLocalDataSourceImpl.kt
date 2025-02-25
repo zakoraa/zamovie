@@ -11,5 +11,4 @@ class MovieLocalDataSourceImpl @Inject constructor(private val dao: MovieDao) : 
 
     override suspend fun insertMovies(movieList: List<MovieEntity>) = dao.insertMovies(movieList)
 
-    override suspend fun updateMovie(movie: MovieEntity) = dao.updateMovie(movie)
 }

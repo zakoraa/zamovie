@@ -1,14 +1,11 @@
 package com.raflis.movie_detail.presentation.screen
 
-import android.content.Intent.EXTRA_USER
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.raflis.core.BuildConfig
-import com.raflis.core.presentation.model.MovieModel
 import com.raflis.core.util.DateFormatter.extractYear
 import com.raflis.core.util.Resource
 import com.raflis.movie_detail.R
@@ -35,18 +32,10 @@ class MovieDetailActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        val movieModel: MovieModel? = if (Build.VERSION.SDK_INT >= 33) {
-            intent.getParcelableExtra(
-                EXTRA_USER,
-                MovieModel::class.java
-            )
-        } else {
-            @Suppress("DEPRECATION")
-            intent.getParcelableExtra(EXTRA_MOVIE)
-        }
+        val movieId = intent.getIntExtra(MOVIE_ID, -1)
 
-        if (movieModel != null) {
-            handleGetMovieDetailById(movieModel.id ?: 0)
+        if (movieId != -1) {
+            handleGetMovieDetailById(movieId)
         }
     }
 
@@ -104,6 +93,6 @@ class MovieDetailActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val EXTRA_MOVIE = "extra_movie"
+        const val MOVIE_ID = "movie_id"
     }
 }

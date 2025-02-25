@@ -7,6 +7,5 @@ import kotlinx.coroutines.flow.Flow
 interface MovieLocalDataSource {
     fun getAllMovies(movieType: MovieType): Flow<List<MovieEntity>>
     suspend fun insertMovies(movieList: List<MovieEntity>)
-    suspend fun updateMovie(movie: MovieEntity)
 
 }
