@@ -4,22 +4,34 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.raflis.core.BuildConfig
+import com.raflis.core.domain.model.FavoriteMovie
+import com.raflis.core.presentation.view_model.FavoriteMovieViewModelFactory
+import com.raflis.core.presentation.view_model.FavoriteViewModel
 import com.raflis.core.util.DateFormatter.extractYear
 import com.raflis.core.util.Resource
+import com.raflis.core.util.ToastUtil
 import com.raflis.movie_detail.R
 import com.raflis.movie_detail.databinding.ActivityMovieDetailBinding
+import com.raflis.movie_detail.presentation.model.MovieDetailModel
 import com.raflis.movie_detail.presentation.view_model.MovieDetailViewModel
 import com.raflis.movie_detail.util.MovieDetailDataMapper.mapDomainToPresentation
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.util.Locale
 
 @AndroidEntryPoint
 class MovieDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMovieDetailBinding
 
-    private val movieDetailViewModel: MovieDetailViewModel by viewModels()
+    private val viewModel: MovieDetailViewModel by viewModels()
+    private val favoriteMovieViewModel: FavoriteViewModel by viewModels {
+        FavoriteMovieViewModelFactory(
+            this
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +47,9 @@ class MovieDetailActivity : AppCompatActivity() {
         val movieId = intent.getIntExtra(MOVIE_ID, -1)
 
         if (movieId != -1) {
-            handleGetMovieDetailById(movieId)
+            viewModel.fetchMovieDetail(movieId)
+            observeMovieDetail()
+            observeFavoriteStatus(movieId)
         }
     }
 
@@ -44,20 +58,57 @@ class MovieDetailActivity : AppCompatActivity() {
             ivBack.setOnClickListener {
                 finish()
             }
+            ivFavorite.setOnClickListener {
+                val movieDetail = viewModel.movieDetail.value
+                if (movieDetail is Resource.Success) {
+                    handleToggleFavoriteMovie(mapDomainToPresentation(movieDetail.data))
+                }
+            }
         }
     }
 
-    private fun handleGetMovieDetailById(id: Int) {
-        movieDetailViewModel.getMovieDetailById(id).observe(this) { movieDetail ->
-            if (movieDetail != null) {
+    private fun observeFavoriteStatus(movieId: Int) {
+        favoriteMovieViewModel.isFavoriteMovie(movieId).observe(this) { favoriteMovie ->
+            binding.apply {
+                if (favoriteMovie.id != null) {
+                    ivFavorite.setImageResource(com.raflis.core.R.drawable.ic_favorite)
+                } else {
+                    ivFavorite.setImageResource(com.raflis.core.R.drawable.ic_favorite_outline)
+                }
+            }
+        }
+    }
+
+    private fun handleToggleFavoriteMovie(movieDetailModel: MovieDetailModel) {
+        val favoriteMovie = FavoriteMovie(
+            title = movieDetailModel.title,
+            posterPath = movieDetailModel.posterPath,
+            releaseDate = movieDetailModel.releaseDate,
+            voteAverage = movieDetailModel.voteAverage,
+            id = movieDetailModel.id
+        )
+        lifecycleScope.launch {
+            favoriteMovieViewModel.toggleFavoriteMovie(favoriteMovie)
+            observeFavoriteStatus(favoriteMovie.id ?: 0)
+        }
+
+    }
+
+    private fun observeMovieDetail() {
+        lifecycleScope.launch {
+            viewModel.movieDetail.collect { movieDetail ->
                 binding.apply {
                     when (movieDetail) {
-                        is Resource.Loading ->
+                        is Resource.Loading -> {
                             showMoviesForYouLoading(true)
+                            ivFavorite.isEnabled = false
+                        }
 
                         is Resource.Success -> {
                             showMoviesForYouLoading(false)
                             val movie = mapDomainToPresentation(movieDetail.data)
+                            ivFavorite.isEnabled = true
+
                             tvTitle.text =
                                 String.format(
                                     Locale.US,
@@ -69,16 +120,27 @@ class MovieDetailActivity : AppCompatActivity() {
                                 .load("${BuildConfig.BASE_URL_IMAGE}${movie.posterPath}")
                                 .centerCrop()
                                 .into(ivMoviePoster)
+
+
+                            ivFavorite.setOnClickListener {
+                                handleToggleFavoriteMovie(movie)
+                            }
                         }
 
                         is Resource.Error -> {
                             showMoviesForYouLoading(false)
+                            ivFavorite.isEnabled = false
+                            ToastUtil.showToast(
+                                this@MovieDetailActivity,
+                                "Get movie detail failed. Please try again!"
+                            )
                         }
                     }
                 }
             }
         }
     }
+
 
     private fun showMoviesForYouLoading(isLoading: Boolean) {
         binding.apply {

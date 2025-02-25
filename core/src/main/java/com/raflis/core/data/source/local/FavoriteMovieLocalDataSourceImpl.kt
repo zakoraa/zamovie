@@ -1,7 +1,7 @@
-package com.raflis.zamovie.favorite_movie.data.source.local
+package com.raflis.core.data.source.local
 
-import com.raflis.zamovie.favorite_movie.data.source.local.entity.FavoriteMovieEntity
-import com.raflis.zamovie.favorite_movie.data.source.local.room.FavoriteMovieDao
+import com.raflis.core.data.source.local.entity.FavoriteMovieEntity
+import com.raflis.core.data.source.local.room.FavoriteMovieDao
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 
@@ -9,6 +9,10 @@ class FavoriteMovieLocalDataSourceImpl(private val dao: FavoriteMovieDao) :
     FavoriteMovieLocalDataSource {
     override fun getAllFavoriteMovies(): Flow<List<FavoriteMovieEntity>> {
         return dao.getAllFavoriteMovies()
+    }
+
+    override fun getFavoriteMovieById(id: Int): Flow<FavoriteMovieEntity> {
+        return dao.getFavoriteMovieById(id)
     }
 
     override suspend fun toggleFavoriteMovie(favoriteMovieEntity: FavoriteMovieEntity) {

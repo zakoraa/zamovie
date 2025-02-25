@@ -1,21 +1,19 @@
-package com.raflis.zamovie.favorite_movie.util
+package com.raflis.core.util
 
-import com.raflis.zamovie.favorite_movie.data.source.local.entity.FavoriteMovieEntity
-import com.raflis.zamovie.favorite_movie.domain.model.FavoriteMovie
-import com.raflis.zamovie.favorite_movie.presentation.model.FavoriteMovieModel
+import com.raflis.core.data.source.local.entity.FavoriteMovieEntity
+import com.raflis.core.domain.model.FavoriteMovie
+import com.raflis.core.presentation.model.FavoriteMovieModel
 
 object FavoriteMovieDataMapper {
 
     // Convert dari Entity (Database) ke Domain Model
-    fun mapEntityToDomain(input: FavoriteMovieEntity): FavoriteMovie {
+    fun mapEntityToDomain(input: FavoriteMovieEntity?): FavoriteMovie {
         return FavoriteMovie(
-            id = input.id,
-            originalLanguage = input.originalLanguage,
-            title = input.title,
-            posterPath = input.posterPath,
-            releaseDate = input.releaseDate,
-            popularity = input.popularity,
-            voteAverage = input.voteAverage
+            id = input?.id,
+            title = input?.title,
+            posterPath = input?.posterPath,
+            releaseDate = input?.releaseDate,
+            voteAverage = input?.voteAverage
         )
     }
 
@@ -28,11 +26,9 @@ object FavoriteMovieDataMapper {
     fun mapDomainToEntity(input: FavoriteMovie): FavoriteMovieEntity {
         return FavoriteMovieEntity(
             id = input.id ?: 0, // Default 0 jika null
-            originalLanguage = input.originalLanguage ?: "",
             title = input.title ?: "",
             posterPath = input.posterPath ?: "",
             releaseDate = input.releaseDate ?: "",
-            popularity = input.popularity ?: 0.0,
             voteAverage = input.voteAverage ?: 0.0
         )
     }
@@ -46,11 +42,9 @@ object FavoriteMovieDataMapper {
     fun mapDomainToPresentation(input: FavoriteMovie): FavoriteMovieModel {
         return FavoriteMovieModel(
             id = input.id,
-            originalLanguage = input.originalLanguage,
             title = input.title,
             posterPath = input.posterPath,
             releaseDate = input.releaseDate,
-            popularity = input.popularity,
             voteAverage = input.voteAverage
         )
     }
@@ -64,11 +58,9 @@ object FavoriteMovieDataMapper {
     fun mapPresentationToDomain(input: FavoriteMovieModel): FavoriteMovie {
         return FavoriteMovie(
             id = input.id,
-            originalLanguage = input.originalLanguage,
             title = input.title,
             posterPath = input.posterPath,
             releaseDate = input.releaseDate,
-            popularity = input.popularity,
             voteAverage = input.voteAverage
         )
     }

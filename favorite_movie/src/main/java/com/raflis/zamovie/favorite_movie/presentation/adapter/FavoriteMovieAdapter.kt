@@ -7,8 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.raflis.core.BuildConfig
 import com.raflis.core.databinding.MovieTopRatedCardItemBinding
+import com.raflis.core.presentation.model.FavoriteMovieModel
+import com.raflis.core.util.DateFormatter.formatDate
 import com.raflis.movie_detail.presentation.screen.MovieDetailActivity
-import com.raflis.zamovie.favorite_movie.presentation.model.FavoriteMovieModel
 
 
 class FavoriteMovieAdapter(private val movies: List<FavoriteMovieModel>) :
@@ -20,7 +21,7 @@ class FavoriteMovieAdapter(private val movies: List<FavoriteMovieModel>) :
         fun bind(movie: FavoriteMovieModel) {
             binding.apply {
                 tvTitle.text = movie.title ?: "Untitled"
-                tvReleaseDate.text = movie.releaseDate ?: "Unknown"
+                tvReleaseDate.text = formatDate(movie.releaseDate)
                 tvRating.text = movie.voteAverage.toString()
 
                 Glide.with(root.context)

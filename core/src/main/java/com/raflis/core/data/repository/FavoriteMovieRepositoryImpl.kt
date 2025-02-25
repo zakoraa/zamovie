@@ -1,9 +1,9 @@
-package com.raflis.zamovie.favorite_movie.data.repository
+package com.raflis.core.data.repository
 
-import com.raflis.zamovie.favorite_movie.data.source.local.FavoriteMovieLocalDataSource
-import com.raflis.zamovie.favorite_movie.domain.model.FavoriteMovie
-import com.raflis.zamovie.favorite_movie.domain.repository.FavoriteMovieRepository
-import com.raflis.zamovie.favorite_movie.util.FavoriteMovieDataMapper
+import com.raflis.core.data.source.local.FavoriteMovieLocalDataSource
+import com.raflis.core.domain.model.FavoriteMovie
+import com.raflis.core.domain.repository.FavoriteMovieRepository
+import com.raflis.core.util.FavoriteMovieDataMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -13,6 +13,12 @@ class FavoriteMovieRepositoryImpl(
     override fun getAllFavoriteMovies(): Flow<List<FavoriteMovie>> {
         return localDataSource.getAllFavoriteMovies().map {
             FavoriteMovieDataMapper.mapEntitiesToDomain(it)
+        }
+    }
+
+    override fun getFavoriteMovieById(id: Int): Flow<FavoriteMovie> {
+        return localDataSource.getFavoriteMovieById(id).map {
+            FavoriteMovieDataMapper.mapEntityToDomain(it)
         }
     }
 

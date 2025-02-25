@@ -6,11 +6,11 @@ import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.raflis.core.databinding.ActivityBaseScreenBinding
 import com.raflis.core.presentation.screen.BaseScreenActivity
+import com.raflis.core.presentation.view_model.FavoriteMovieViewModelFactory
+import com.raflis.core.presentation.view_model.FavoriteViewModel
+import com.raflis.core.util.FavoriteMovieDataMapper.mapDomainsToPresentation
 import com.raflis.zamovie.favorite_movie.databinding.ActivityFavoriteMovieBinding
 import com.raflis.zamovie.favorite_movie.presentation.adapter.FavoriteMovieAdapter
-import com.raflis.zamovie.favorite_movie.presentation.view_model.FavoriteMovieViewModelFactory
-import com.raflis.zamovie.favorite_movie.presentation.view_model.FavoriteViewModel
-import com.raflis.zamovie.favorite_movie.util.FavoriteMovieDataMapper.mapDomainsToPresentation
 
 class FavoriteMovieActivity : BaseScreenActivity() {
     private lateinit var baseBinding: ActivityBaseScreenBinding

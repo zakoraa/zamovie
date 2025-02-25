@@ -1,4 +1,4 @@
-package com.raflis.zamovie.favorite_movie.data.source.local.entity
+package com.raflis.core.data.source.local.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -10,9 +10,6 @@ data class FavoriteMovieEntity(
     @ColumnInfo(name = "id")
     val id: Int,
 
-    @ColumnInfo(name = "original_language")
-    val originalLanguage: String?,
-
     @ColumnInfo(name = "title")
     val title: String?,
 
@@ -21,9 +18,6 @@ data class FavoriteMovieEntity(
 
     @ColumnInfo(name = "release_date")
     val releaseDate: String?,
-
-    @ColumnInfo(name = "popularity")
-    val popularity: Double?,
 
     @ColumnInfo(name = "vote_average")
     val voteAverage: Double?

@@ -1,10 +1,10 @@
-package com.raflis.zamovie.favorite_movie.data.source.local.room
+package com.raflis.core.data.source.local.room
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.raflis.zamovie.favorite_movie.data.source.local.entity.FavoriteMovieEntity
+import com.raflis.core.data.source.local.entity.FavoriteMovieEntity
 
 @Database(entities = [FavoriteMovieEntity::class], version = 1, exportSchema = false)
 abstract class FavoriteMovieDatabase : RoomDatabase() {
@@ -19,7 +19,7 @@ abstract class FavoriteMovieDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     FavoriteMovieDatabase::class.java,
-                    "favorite_movie_db"
+                    "favorite_movie.db"
                 ).build()
                 INSTANCE = instance
                 instance

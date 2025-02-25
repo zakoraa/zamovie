@@ -1,11 +1,11 @@
-package com.raflis.zamovie.favorite_movie.data.source.local.room
+package com.raflis.core.data.source.local.room
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.raflis.zamovie.favorite_movie.data.source.local.entity.FavoriteMovieEntity
+import com.raflis.core.data.source.local.entity.FavoriteMovieEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -18,8 +18,8 @@ interface FavoriteMovieDao {
     fun getFavoriteMovieById(id: Int): Flow<FavoriteMovieEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertFavoriteMovie(favoriteMovie: FavoriteMovieEntity)
+    suspend fun insertFavoriteMovie(favoriteMovie: FavoriteMovieEntity)
 
     @Delete
-    fun deleteFavoriteMovie(favoriteMovie: FavoriteMovieEntity)
+    suspend fun deleteFavoriteMovie(favoriteMovie: FavoriteMovieEntity)
 }

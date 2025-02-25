@@ -1,9 +1,10 @@
-package com.raflis.zamovie.favorite_movie.data.source.local
+package com.raflis.core.data.source.local
 
-import com.raflis.zamovie.favorite_movie.data.source.local.entity.FavoriteMovieEntity
+import com.raflis.core.data.source.local.entity.FavoriteMovieEntity
 import kotlinx.coroutines.flow.Flow
 
 interface FavoriteMovieLocalDataSource {
     fun getAllFavoriteMovies(): Flow<List<FavoriteMovieEntity>>
+    fun getFavoriteMovieById(id: Int): Flow<FavoriteMovieEntity>
     suspend fun toggleFavoriteMovie(favoriteMovieEntity: FavoriteMovieEntity)
 }

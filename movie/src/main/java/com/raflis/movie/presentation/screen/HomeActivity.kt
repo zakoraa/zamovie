@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.raflis.core.databinding.ActivityBaseScreenBinding
 import com.raflis.core.presentation.screen.BaseScreenActivity
 import com.raflis.core.util.Resource
+import com.raflis.core.util.ToastUtil
 import com.raflis.movie.databinding.ActivityHomeBinding
 import com.raflis.movie.presentation.adapter.CarouselHomeAdapter
 import com.raflis.movie.presentation.adapter.MovieHorizontalAdapter
@@ -102,6 +103,10 @@ class HomeActivity : BaseScreenActivity() {
                         is Resource.Error -> {
                             showMoviesForYouLoading(false)
                             tvForYou.visibility = View.GONE
+                            ToastUtil.showToast(
+                                this@HomeActivity,
+                                "Get movie failed. Please try again!"
+                            )
                         }
                     }
                 }
@@ -157,6 +162,10 @@ class HomeActivity : BaseScreenActivity() {
                         is Resource.Error -> {
                             showMoviesPopularLoading(false)
                             tvPopular.visibility = View.GONE
+                            ToastUtil.showToast(
+                                this@HomeActivity,
+                                "Get movie failed. Please try again!"
+                            )
                         }
                     }
                 }
@@ -212,6 +221,10 @@ class HomeActivity : BaseScreenActivity() {
                         is Resource.Error -> {
                             showMoviesTopRatedLoading(false)
                             tvTopRated.visibility = View.GONE
+                            ToastUtil.showToast(
+                                this@HomeActivity,
+                                "Get movie failed. Please try again!"
+                            )
                         }
                     }
                 }
