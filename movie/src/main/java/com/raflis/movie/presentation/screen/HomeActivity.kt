@@ -1,16 +1,18 @@
 package com.raflis.movie.presentation.screen
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.raflis.core.databinding.ActivityBaseScreenBinding
-import com.raflis.movie.presentation.adapter.MovieVerticalAdapter
 import com.raflis.core.presentation.screen.BaseScreenActivity
 import com.raflis.core.util.Resource
 import com.raflis.movie.databinding.ActivityHomeBinding
 import com.raflis.movie.presentation.adapter.CarouselHomeAdapter
 import com.raflis.movie.presentation.adapter.MovieHorizontalAdapter
+import com.raflis.movie.presentation.adapter.MovieVerticalAdapter
 import com.raflis.movie.presentation.view_model.HomeViewModel
 import com.raflis.movie.util.MovieDataMapper
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,12 +35,22 @@ class HomeActivity : BaseScreenActivity() {
 
         baseBinding.container.addView(homeBinding.root)
         initView()
+        initAction()
     }
 
     private fun initView() {
         handleGetMoviesForYou()
         handleGetMoviesPopular()
         handleGetMoviesTopRated()
+    }
+
+    private fun initAction() {
+        homeBinding.apply {
+            ivFavorite.setOnClickListener {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("zamovie://favorite"))
+                startActivity(intent)
+            }
+        }
     }
 
     private fun handleGetMoviesForYou() {
