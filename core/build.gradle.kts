@@ -97,4 +97,10 @@ dependencies {
     api(libs.androidx.lifecycle.livedata.ktx)
 
     api(libs.feature.delivery.ktx)
+
+    api(libs.android.database.sqlcipher)
+    api(libs.androidx.sqlite.ktx)
+
+    api(libs.androidx.security.crypto)
+    api(libs.secure.preferences.lib)
 }

@@ -5,6 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.raflis.core.data.source.local.entity.FavoriteMovieEntity
+import com.raflis.core.util.SecureDatabaseUtil.getPassphrase
+import net.sqlcipher.database.SupportFactory
 
 @Database(entities = [FavoriteMovieEntity::class], version = 1, exportSchema = false)
 abstract class FavoriteMovieDatabase : RoomDatabase() {
@@ -16,11 +18,15 @@ abstract class FavoriteMovieDatabase : RoomDatabase() {
 
         fun getInstance(context: Context): FavoriteMovieDatabase {
             return INSTANCE ?: synchronized(this) {
+                val passphrase: ByteArray = getPassphrase(context)
+                val factory = SupportFactory(passphrase)
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     FavoriteMovieDatabase::class.java,
                     "favorite_movie.db"
-                ).build()
+                ).openHelperFactory(factory)
+                    .fallbackToDestructiveMigration()
+                    .build()
                 INSTANCE = instance
                 instance
             }
