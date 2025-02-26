@@ -4,8 +4,8 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.raflis.core.BuildConfig
+import com.raflis.core.util.loadImage
 import com.raflis.movie.databinding.CarouselHomeItemBinding
 import com.raflis.movie.presentation.model.MovieModel
 import com.raflis.movie_detail.presentation.screen.MovieDetailActivity
@@ -20,10 +20,9 @@ class CarouselHomeAdapter(private val movies: List<MovieModel>) :
             binding.apply {
                 tvTitle.text = movie.title ?: "Untitled"
 
-                Glide.with(root.context)
-                    .load("${BuildConfig.BASE_URL_IMAGE}${movie.backdropPath}")
-                    .centerCrop()
-                    .into(ivMoviePoster)
+                ivMoviePoster.loadImage(
+                    url = "${BuildConfig.BASE_URL_IMAGE}${movie.backdropPath}"
+                )
 
                 root.setOnClickListener {
                     val context = binding.root.context

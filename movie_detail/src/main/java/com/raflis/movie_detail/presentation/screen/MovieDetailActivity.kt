@@ -5,7 +5,6 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.bumptech.glide.Glide
 import com.raflis.core.BuildConfig
 import com.raflis.core.domain.model.FavoriteMovie
 import com.raflis.core.presentation.view_model.FavoriteMovieViewModelFactory
@@ -13,6 +12,7 @@ import com.raflis.core.presentation.view_model.FavoriteViewModel
 import com.raflis.core.util.DateFormatter.extractYear
 import com.raflis.core.util.Resource
 import com.raflis.core.util.ToastUtil
+import com.raflis.core.util.loadImage
 import com.raflis.movie_detail.R
 import com.raflis.movie_detail.databinding.ActivityMovieDetailBinding
 import com.raflis.movie_detail.presentation.model.MovieDetailModel
@@ -116,11 +116,10 @@ class MovieDetailActivity : AppCompatActivity() {
                                 )
                             tvDesc.text = movie.overview
                             tvRating.text = String.format(Locale.US, movie.voteAverage.toString())
-                            Glide.with(root.context)
-                                .load("${BuildConfig.BASE_URL_IMAGE}${movie.posterPath}")
-                                .centerCrop()
-                                .into(ivMoviePoster)
 
+                            ivMoviePoster.loadImage(
+                                url = "${BuildConfig.BASE_URL_IMAGE}${movie.posterPath}"
+                            )
 
                             ivFavorite.setOnClickListener {
                                 handleToggleFavoriteMovie(movie)
@@ -132,7 +131,7 @@ class MovieDetailActivity : AppCompatActivity() {
                             ivFavorite.isEnabled = false
                             ToastUtil.showToast(
                                 this@MovieDetailActivity,
-                                "Get movie detail failed. Please try again!"
+                                getString(com.raflis.core.R.string.get_movie_failed_message)
                             )
                         }
                     }

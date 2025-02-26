@@ -25,7 +25,7 @@ object FavoriteMovieDataMapper {
     // Convert dari Domain Model ke Entity untuk penyimpanan ke Database
     fun mapDomainToEntity(input: FavoriteMovie): FavoriteMovieEntity {
         return FavoriteMovieEntity(
-            id = input.id ?: 0, // Default 0 jika null
+            id = input.id ?: 0,
             title = input.title ?: "",
             posterPath = input.posterPath ?: "",
             releaseDate = input.releaseDate ?: "",
@@ -33,13 +33,8 @@ object FavoriteMovieDataMapper {
         )
     }
 
-    // Convert dari List Domain Model ke List Entity
-    fun mapDomainsToEntities(input: List<FavoriteMovie>): List<FavoriteMovieEntity> {
-        return input.map { mapDomainToEntity(it) }
-    }
-
     // Convert dari Domain Model ke UI Model
-    fun mapDomainToPresentation(input: FavoriteMovie): FavoriteMovieModel {
+    private fun mapDomainToPresentation(input: FavoriteMovie): FavoriteMovieModel {
         return FavoriteMovieModel(
             id = input.id,
             title = input.title,
@@ -55,7 +50,7 @@ object FavoriteMovieDataMapper {
     }
 
     // Convert dari UI Model ke Domain Model
-    fun mapPresentationToDomain(input: FavoriteMovieModel): FavoriteMovie {
+    private fun mapPresentationToDomain(input: FavoriteMovieModel): FavoriteMovie {
         return FavoriteMovie(
             id = input.id,
             title = input.title,
@@ -65,8 +60,4 @@ object FavoriteMovieDataMapper {
         )
     }
 
-    // Convert dari List Presentation Model ke List Domain Model
-    fun mapPresentationsToDomains(input: List<FavoriteMovieModel>): List<FavoriteMovie> {
-        return input.map { mapPresentationToDomain(it) }
-    }
 }

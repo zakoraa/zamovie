@@ -1,7 +1,6 @@
 package com.raflis.movie.util
 
 import com.raflis.core.util.DateFormatter.formatDate
-import com.raflis.core.util.DateFormatter.parseDate
 import com.raflis.movie.data.source.local.entity.MovieEntity
 import com.raflis.movie.data.source.remote.response.MovieResponse
 import com.raflis.movie.domain.model.Movie
@@ -19,7 +18,7 @@ object MovieDataMapper {
     }
 
     // Convert dari Remote API Response ke Database Entity
-    fun mapResponseToEntity(input: MovieResponse, movieType: MovieType): MovieEntity {
+    private fun mapResponseToEntity(input: MovieResponse, movieType: MovieType): MovieEntity {
         return MovieEntity(
             id = input.id ?: 0,
             overview = input.overview ?: "",
@@ -53,41 +52,8 @@ object MovieDataMapper {
         }
     }
 
-    // Convert dari Domain Model ke Entity untuk penyimpanan ke Database
-    fun mapDomainToEntity(input: Movie, movieType: MovieType): MovieEntity {
-        return MovieEntity(
-            id = input.id ?: 0,
-            overview = input.overview ?: "",
-            originalLanguage = input.originalLanguage ?: "",
-            originalTitle = input.originalTitle ?: "",
-            title = input.title ?: "",
-            posterPath = input.posterPath ?: "",
-            backdropPath = input.backdropPath ?: "",
-            releaseDate = input.releaseDate ?: "",
-            popularity = input.popularity ?: 0.0,
-            voteAverage = input.voteAverage ?: 0.0,
-            type = movieType.value
-        )
-    }
-
-    // Convert dari Entity (Database) ke Domain Model (SINGLE OBJECT)
-    fun mapEntityToDomain(input: MovieEntity): Movie {
-        return Movie(
-            id = input.id,
-            overview = input.overview,
-            originalLanguage = input.originalLanguage,
-            originalTitle = input.originalTitle,
-            title = input.title,
-            posterPath = input.posterPath,
-            backdropPath = input.backdropPath,
-            releaseDate = input.releaseDate,
-            popularity = input.popularity,
-            voteAverage = input.voteAverage
-        )
-    }
-
     // Convert dari Domain ke UI Model (SINGLE)
-    fun mapDomainToPresentation(input: Movie): MovieModel {
+    private fun mapDomainToPresentation(input: Movie): MovieModel {
         return MovieModel(
             id = input.id,
             overview = input.overview,
@@ -102,29 +68,8 @@ object MovieDataMapper {
         )
     }
 
-    // Convert dari UI Model ke Domain (SINGLE)
-    fun mapPresentationToDomain(input: MovieModel): Movie {
-        return Movie(
-            id = input.id,
-            overview = input.overview,
-            originalLanguage = input.originalLanguage,
-            originalTitle = input.originalTitle,
-            title = input.title,
-            posterPath = input.posterPath,
-            backdropPath = input.backdropPath,
-            releaseDate = parseDate(input.releaseDate),
-            popularity = input.popularity,
-            voteAverage = input.voteAverage
-        )
-    }
-
     // Convert dari List Domain ke List UI Model
     fun mapDomainListToPresentation(input: List<Movie>): List<MovieModel> {
         return input.map { mapDomainToPresentation(it) }
-    }
-
-    // Convert dari List UI Model ke List Domain
-    fun mapPresentationListToDomain(input: List<MovieModel>): List<Movie> {
-        return input.map { mapPresentationToDomain(it) }
     }
 }

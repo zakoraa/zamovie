@@ -6,4 +6,9 @@
     <string name="star_icon_desc">star icon</string>
     <string name="movie_card_item_image_desc">movie poster</string>
     <string name="no_data">No Data</string>
+
+    <string name="install_module_success_message">Get movie failed. Please try again!</string>
+
+    <string name="get_movie_failed_message">Success installing module</string>
+    <string name="install_module_failed_message">Error installing module. Please try again!</string>
 </resources>

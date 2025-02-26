@@ -3,7 +3,6 @@ package com.raflis.movie.presentation.screen
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
@@ -58,6 +57,7 @@ class HomeActivity : BaseScreenActivity() {
             }
         }
     }
+
     private fun installFavoriteMovieModule() {
         val splitInstallManager = SplitInstallManagerFactory.create(this)
         val moduleFavoriteMovie = "favorite_movie"
@@ -69,17 +69,28 @@ class HomeActivity : BaseScreenActivity() {
                 .build()
             splitInstallManager.startInstall(request)
                 .addOnSuccessListener {
-                    Toast.makeText(this, "Success installing module", Toast.LENGTH_SHORT).show()
+                    ToastUtil.showToast(
+                        this@HomeActivity,
+                        getString(com.raflis.core.R.string.install_module_success_message)
+                    )
                     moveToFavoriteMovieActivity()
                 }
                 .addOnFailureListener {
-                    Toast.makeText(this, "Error installing module", Toast.LENGTH_SHORT).show()
+                    ToastUtil.showToast(
+                        this@HomeActivity,
+                        getString(com.raflis.core.R.string.install_module_failed_message)
+                    )
                 }
         }
     }
 
     private fun moveToFavoriteMovieActivity() {
-        startActivity(Intent(this, Class.forName("com.raflis.zamovie.favorite_movie.presentation.screen.FavoriteMovieActivity")))
+        startActivity(
+            Intent(
+                this,
+                Class.forName("com.raflis.zamovie.favorite_movie.presentation.screen.FavoriteMovieActivity")
+            )
+        )
     }
 
     private fun handleGetMoviesForYou() {
@@ -133,7 +144,7 @@ class HomeActivity : BaseScreenActivity() {
                             tvForYou.visibility = View.GONE
                             ToastUtil.showToast(
                                 this@HomeActivity,
-                                "Get movie failed. Please try again!"
+                                getString(com.raflis.core.R.string.get_movie_failed_message)
                             )
                         }
                     }
@@ -192,7 +203,7 @@ class HomeActivity : BaseScreenActivity() {
                             tvPopular.visibility = View.GONE
                             ToastUtil.showToast(
                                 this@HomeActivity,
-                                "Get movie failed. Please try again!"
+                                getString(com.raflis.core.R.string.get_movie_failed_message)
                             )
                         }
                     }
@@ -251,7 +262,7 @@ class HomeActivity : BaseScreenActivity() {
                             tvTopRated.visibility = View.GONE
                             ToastUtil.showToast(
                                 this@HomeActivity,
-                                "Get movie failed. Please try again!"
+                                getString(com.raflis.core.R.string.get_movie_failed_message)
                             )
                         }
                     }
