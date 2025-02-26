@@ -6,6 +6,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import javax.inject.Singleton
@@ -22,8 +23,14 @@ object MovieNetworkModule {
         } else {
             HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
         }
+        val hostname = "api.themoviedb.org"
+
+        val certificatePinner = CertificatePinner.Builder()
+            .add(hostname, "sha256/k1Hdw5sdSn5kh/gemLVSQD/P4i4IBQEY1tW4WNxh9XM=")
+            .build()
 
         return OkHttpClient.Builder()
+            .certificatePinner(certificatePinner)
             .addInterceptor(AuthInterceptor(BuildConfig.API_KEY))
             .addInterceptor(loggingInterceptor)
             .build()
