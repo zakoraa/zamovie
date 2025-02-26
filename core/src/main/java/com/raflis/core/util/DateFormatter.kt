@@ -15,17 +15,6 @@ object DateFormatter {
         }
     }
 
-    fun parseDate(inputDate: String?): String {
-        return try {
-            val inputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            val date = inputFormat.parse(inputDate ?: "")
-            date?.let { outputFormat.format(it) } ?: "Unknown Date"
-        } catch (e: Exception) {
-            "Unknown Date"
-        }
-    }
-
     fun extractYear(inputDate: String?): String {
         return try {
             val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())

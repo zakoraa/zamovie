@@ -2,7 +2,6 @@
     <string name="home_title">Movie Time!</string>
     <string name="favorite_icon">favorite icon</string>
     <string name="home_desc">Watch, Enjoy, Repeat Forever</string>
-    <string name="iv_carouse_home_item_desc">carousel home item image</string>
     <string name="popular">Popular</string>
     <string name="for_you">For You</string>
     <string name="top_rated">Top Rated</string>

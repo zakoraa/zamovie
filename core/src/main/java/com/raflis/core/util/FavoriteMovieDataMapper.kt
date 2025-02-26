@@ -48,16 +48,4 @@ object FavoriteMovieDataMapper {
     fun mapDomainsToPresentation(input: List<FavoriteMovie>): List<FavoriteMovieModel> {
         return input.map { mapDomainToPresentation(it) }
     }
-
-    // Convert dari UI Model ke Domain Model
-    private fun mapPresentationToDomain(input: FavoriteMovieModel): FavoriteMovie {
-        return FavoriteMovie(
-            id = input.id,
-            title = input.title,
-            posterPath = input.posterPath,
-            releaseDate = input.releaseDate,
-            voteAverage = input.voteAverage
-        )
-    }
-
 }

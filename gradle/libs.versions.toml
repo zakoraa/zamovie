@@ -5,6 +5,7 @@ glide = "4.16.0"
 kotlin = "1.9.24"
 coreKtx = "1.15.0"
 constraintLayout= "2.2.0"
+leakcanaryAndroid = "2.10"
 recyclerview = "1.4.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -24,6 +25,7 @@ activity = "1.10.0"
 
 [libraries]
 feature-delivery-ktx = { module = "com.google.android.play:feature-delivery-ktx", version.ref = "featureDeliveryKtx" }
+leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanaryAndroid" }
 recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintLayout" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
