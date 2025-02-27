@@ -6,41 +6,75 @@ orbs:
 jobs:
   build:
     docker:
-      - image: cimg/android:2023.06  
+      - image: cimg/android:2023.06
+
     steps:
       - checkout
+
+      # Buat apikey.properties dari environment variables
       - run:
           name: Create apikey.properties
           command: |
             echo "API_KEY=${API_KEY}" > apikey.properties
             echo "ANOTHER_SECRET=${ANOTHER_SECRET}" >> apikey.properties
+
       - run:
           name: Verify Java Version
           command: java -version
+
       - run:
           name: Chmod permissions
           command: chmod +x ./gradlew
+
+      # Hapus cache Gradle sebelum build untuk memastikan tidak ada error dari cache lama
+      - run:
+          name: Clean Gradle Cache
+          command: ./gradlew clean --no-daemon
+
       - restore_cache:
           key: android-orb-v1-
+
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
+
       - save_cache:
           key: 'android-orb-v1-{{ epoch }}'
           paths:
             - ~/.android/build-cache
             - ~/.android/cache
+
+      # Tambahkan langkah build khusus untuk Hilt
       - run:
-          name: Run Build
-          command: ./gradlew build
+          name: Run Hilt Aggregation
+          command: ./gradlew app:hiltAggregateDepsDebug --stacktrace
+
+      - run:
+          name: Run Hilt Java Compile
+          command: ./gradlew app:hiltJavaCompileDebug --stacktrace
+
+      # Build Debug
+      - run:
+          name: Run Debug Build
+          command: ./gradlew assembleDebug --stacktrace
+
+      # Build Release (optional, bisa dihapus jika tidak diperlukan)
+      - run:
+          name: Run Release Build
+          command: ./gradlew assembleRelease --stacktrace
+
       - store_artifacts:
           path: app/build/reports
           destination: reports
+
+      # Jalankan tes lint dan unit test
       - run:
           name: Run Tests
           command: ./gradlew lint test
+
       - store_test_results:
           path: app/build/test-results
+
       - store_artifacts:
           path: app/build/outputs/apk/debug/
           destination: artifact-file
