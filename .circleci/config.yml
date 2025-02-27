@@ -6,17 +6,10 @@ orbs:
 jobs:
   build:
     docker:
-      - image: cimg/android:2023.06  # Pastikan image ini cocok dengan lokal
+      - image: cimg/android:2023.06
 
     steps:
       - checkout
-
-      # Cek versi Gradle & Java
-      - run:
-          name: Check Gradle & Java Version
-          command: |
-            ./gradlew -v
-            java -version
 
       # Buat apikey.properties dari environment variables
       - run:
@@ -26,16 +19,17 @@ jobs:
             echo "ANOTHER_SECRET=${ANOTHER_SECRET}" >> apikey.properties
 
       - run:
+          name: Verify Java Version
+          command: java -version
+
+      - run:
           name: Chmod permissions
           command: chmod +x ./gradlew
 
-      # Hapus cache Gradle sebelum build
+      # Hapus cache Gradle sebelum build untuk memastikan tidak ada error dari cache lama
       - run:
           name: Clean Gradle Cache
-          command: |
-            rm -rf ~/.gradle/caches
-            rm -rf ~/.gradle/wrapper
-            ./gradlew clean --no-daemon
+          command: ./gradlew clean --no-daemon
 
       - restore_cache:
           key: android-orb-v1-
@@ -47,12 +41,10 @@ jobs:
       - save_cache:
           key: 'android-orb-v1-{{ epoch }}'
           paths:
-            - ~/.gradle/caches
-            - ~/.gradle/wrapper
             - ~/.android/build-cache
             - ~/.android/cache
 
-      # Langkah Build untuk Hilt
+      # Tambahkan langkah build khusus untuk Hilt
       - run:
           name: Run Hilt Aggregation
           command: ./gradlew app:hiltAggregateDepsDebug --stacktrace
@@ -61,16 +53,12 @@ jobs:
           name: Run Hilt Java Compile
           command: ./gradlew app:hiltJavaCompileDebug --stacktrace
 
-      - run:
-          name: Run Kapt Debug
-          command: ./gradlew kaptDebugKotlin --stacktrace
-
       # Build Debug
       - run:
           name: Run Debug Build
           command: ./gradlew assembleDebug --stacktrace
 
-      # Build Release (optional)
+      # Build Release (optional, bisa dihapus jika tidak diperlukan)
       - run:
           name: Run Release Build
           command: ./gradlew assembleRelease --stacktrace
