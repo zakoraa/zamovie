@@ -53,6 +53,10 @@ jobs:
           name: Run Hilt Java Compile
           command: ./gradlew app:hiltJavaCompileDebug --stacktrace
 
+      - run:
+          name: Run Kapt Debug
+          command: ./gradlew kaptDebugKotlin --stacktrace
+
       # Build Debug
       - run:
           name: Run Debug Build
