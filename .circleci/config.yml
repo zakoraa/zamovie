@@ -1,84 +1,65 @@
 version: 2.1
 
-orbs:
-  android: circleci/android@0.2.1
+executors:
+  android-executor:
+    docker:
+      - image: cimg/android:2023.06
+    working_directory: ~/project
+    resource_class: large
 
 jobs:
   build:
-    docker:
-      - image: cimg/android:2023.06
-
+    executor: android-executor
     steps:
       - checkout
 
-      # Buat apikey.properties dari environment variables
-      - run:
-          name: Create apikey.properties
-          command: |
-            echo "API_KEY=${API_KEY}" > apikey.properties
-            echo "ANOTHER_SECRET=${ANOTHER_SECRET}" >> apikey.properties
-
-      - run:
-          name: Verify Java Version
-          command: java -version
-
-      - run:
-          name: Chmod permissions
-          command: chmod +x ./gradlew
-
-      # Hapus cache Gradle sebelum build untuk memastikan tidak ada error dari cache lama
-      - run:
-          name: Clean Gradle Cache
-          command: ./gradlew clean --no-daemon
-
+      # Cache Gradle untuk mempercepat build
       - restore_cache:
-          key: android-orb-v1-
+          keys:
+            - gradle-cache-v1-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
+            - gradle-cache-v1-
 
+      # Cek versi Java & Gradle
       - run:
-          name: Download Dependencies
-          command: ./gradlew androidDependencies
+          name: Cek Versi Java dan Gradle
+          command: |
+            java -version
+            ./gradlew --version
 
+      # Set JDK (pastikan sesuai dengan yang digunakan di lokal)
+      - run:
+          name: Set Java Version
+          command: export JAVA_HOME=$(/usr/libexec/java_home -v 17)
+
+      # Bersihkan build sebelumnya
+      - run:
+          name: Bersihkan Build Lama
+          command: ./gradlew clean
+
+      # Install dependencies
+      - run:
+          name: Install Dependencies
+          command: ./gradlew dependencies
+
+      # Build APK Debug
+      - run:
+          name: Build Debug APK
+          command: ./gradlew assembleDebug
+
+      # Simpan cache untuk build berikutnya
       - save_cache:
-          key: 'android-orb-v1-{{ epoch }}'
           paths:
-            - ~/.android/build-cache
-            - ~/.android/cache
+            - ~/.gradle/caches
+            - ~/.gradle/wrapper
+          key: gradle-cache-v1-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
 
-      # Tambahkan langkah build khusus untuk Hilt
-      - run:
-          name: Run Hilt Aggregation
-          command: ./gradlew app:hiltAggregateDepsDebug --stacktrace
-
-      - run:
-          name: Run Hilt Java Compile
-          command: ./gradlew app:hiltJavaCompileDebug --stacktrace
-
-      - run:
-          name: Run Kapt Debug
-          command: ./gradlew kaptDebugKotlin --stacktrace
-
-      # Build Debug
-      - run:
-          name: Run Debug Build
-          command: ./gradlew assembleDebug --stacktrace
-
-      # Build Release (optional, bisa dihapus jika tidak diperlukan)
-      - run:
-          name: Run Release Build
-          command: ./gradlew assembleRelease --stacktrace
-
+      # Simpan APK sebagai artifact
       - store_artifacts:
-          path: app/build/reports
-          destination: reports
+          path: app/build/outputs/apk/debug/app-debug.apk
+          destination: apk
 
-      # Jalankan tes lint dan unit test
-      - run:
-          name: Run Tests
-          command: ./gradlew lint test
-
-      - store_test_results:
-          path: app/build/test-results
-
-      - store_artifacts:
-          path: app/build/outputs/apk/debug/
-          destination: artifact-file
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
