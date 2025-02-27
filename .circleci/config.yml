@@ -13,47 +13,43 @@ jobs:
     steps:
       - checkout
 
-      # Cache Gradle untuk mempercepat build
+      - run:
+          name: Beri Izin Eksekusi Gradle Wrapper
+          command: chmod +x gradlew
+
       - restore_cache:
           keys:
             - gradle-cache-v1-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
             - gradle-cache-v1-
 
-      # Cek versi Java & Gradle
       - run:
           name: Cek Versi Java dan Gradle
           command: |
             java -version
             ./gradlew --version
 
-      # Set JDK (pastikan sesuai dengan yang digunakan di lokal)
       - run:
           name: Set Java Version
           command: export JAVA_HOME=$(/usr/libexec/java_home -v 17)
 
-      # Bersihkan build sebelumnya
       - run:
           name: Bersihkan Build Lama
           command: ./gradlew clean
 
-      # Install dependencies
       - run:
           name: Install Dependencies
           command: ./gradlew dependencies
 
-      # Build APK Debug
       - run:
           name: Build Debug APK
           command: ./gradlew assembleDebug
 
-      # Simpan cache untuk build berikutnya
       - save_cache:
           paths:
             - ~/.gradle/caches
             - ~/.gradle/wrapper
           key: gradle-cache-v1-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
 
-      # Simpan APK sebagai artifact
       - store_artifacts:
           path: app/build/outputs/apk/debug/app-debug.apk
           destination: apk
