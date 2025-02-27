@@ -9,7 +9,7 @@ import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest
 import com.raflis.core.databinding.ActivityBaseScreenBinding
 import com.raflis.core.presentation.screen.BaseScreenActivity
-import com.raflis.core.util.Resource
+import com.raflis.core.util.ResourceState
 import com.raflis.core.util.ToastUtil
 import com.raflis.movie.databinding.ActivityHomeBinding
 import com.raflis.movie.presentation.adapter.CarouselHomeAdapter
@@ -98,12 +98,12 @@ class HomeActivity : BaseScreenActivity() {
             if (moviesForYou != null) {
                 homeBinding.apply {
                     when (moviesForYou) {
-                        is Resource.Loading -> {
+                        is ResourceState.Loading -> {
                             tvForYou.visibility = View.VISIBLE
                             showMoviesForYouLoading(true)
                         }
 
-                        is Resource.Success -> {
+                        is ResourceState.Success -> {
                             showMoviesForYouLoading(false)
                             tvForYou.visibility = View.VISIBLE
 
@@ -139,7 +139,7 @@ class HomeActivity : BaseScreenActivity() {
                             rvCarouselHome.adapter = carouselAdapter
                         }
 
-                        is Resource.Error -> {
+                        is ResourceState.Error -> {
                             showMoviesForYouLoading(false)
                             tvForYou.visibility = View.GONE
                             ToastUtil.showToast(
@@ -168,17 +168,17 @@ class HomeActivity : BaseScreenActivity() {
             if (moviesPopular != null) {
                 homeBinding.apply {
                     when (moviesPopular) {
-                        is Resource.Loading -> {
+                        is ResourceState.Loading -> {
                             tvPopular.visibility = View.VISIBLE
                             showMoviesPopularLoading(true)
                         }
 
-                        is Resource.Success -> {
+                        is ResourceState.Success -> {
                             showMoviesPopularLoading(false)
                             tvPopular.visibility = View.VISIBLE
-
+                            val data  = moviesPopular.data
                             val movieModelList = MovieDataMapper.mapDomainListToPresentation(
-                                moviesPopular.data ?: emptyList()
+                                data ?: emptyList()
                             )
 
                             if (movieModelList.isEmpty()) {
@@ -198,7 +198,7 @@ class HomeActivity : BaseScreenActivity() {
                             rvPopular.adapter = adapter
                         }
 
-                        is Resource.Error -> {
+                        is ResourceState.Error -> {
                             showMoviesPopularLoading(false)
                             tvPopular.visibility = View.GONE
                             ToastUtil.showToast(
@@ -227,12 +227,12 @@ class HomeActivity : BaseScreenActivity() {
             if (moviesTopRated != null) {
                 homeBinding.apply {
                     when (moviesTopRated) {
-                        is Resource.Loading -> {
+                        is ResourceState.Loading -> {
                             tvTopRated.visibility = View.VISIBLE
                             showMoviesTopRatedLoading(true)
                         }
 
-                        is Resource.Success -> {
+                        is ResourceState.Success -> {
                             showMoviesTopRatedLoading(false)
                             tvTopRated.visibility = View.VISIBLE
 
@@ -257,7 +257,7 @@ class HomeActivity : BaseScreenActivity() {
                             rvTopRated.adapter = adapter
                         }
 
-                        is Resource.Error -> {
+                        is ResourceState.Error -> {
                             showMoviesTopRatedLoading(false)
                             tvTopRated.visibility = View.GONE
                             ToastUtil.showToast(

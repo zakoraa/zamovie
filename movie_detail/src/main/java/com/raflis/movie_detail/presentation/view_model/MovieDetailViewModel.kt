@@ -2,7 +2,7 @@ package com.raflis.movie_detail.presentation.view_model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.raflis.core.util.Resource
+import com.raflis.core.util.ResourceState
 import com.raflis.movie_detail.domain.model.MovieDetail
 import com.raflis.movie_detail.domain.usecase.GetMovieDetailByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,8 +17,8 @@ class MovieDetailViewModel @Inject constructor(
     private val getMovieDetailByIdUseCase: GetMovieDetailByIdUseCase
 ) : ViewModel() {
 
-    private val _movieDetail = MutableStateFlow<Resource<MovieDetail>>(Resource.Loading())
-    val movieDetail: StateFlow<Resource<MovieDetail>> = _movieDetail.asStateFlow()
+    private val _movieDetail = MutableStateFlow<ResourceState<MovieDetail>>(ResourceState.Loading())
+    val movieDetail: StateFlow<ResourceState<MovieDetail>> = _movieDetail.asStateFlow()
 
     fun fetchMovieDetail(id: Int) {
         viewModelScope.launch {

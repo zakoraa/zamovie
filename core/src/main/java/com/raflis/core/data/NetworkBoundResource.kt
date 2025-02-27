@@ -1,7 +1,7 @@
 package com.raflis.core.data
 
 import com.raflis.core.data.source.remote.network.ApiResponse
-import com.raflis.core.util.Resource
+import com.raflis.core.util.ResourceState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.first
@@ -10,36 +10,35 @@ import kotlinx.coroutines.flow.map
 
 abstract class NetworkBoundResource<ResultType, RequestType> {
 
-    private var result: Flow<Resource<ResultType>> = flow {
-        emit(Resource.Loading())
+    private var result: Flow<ResourceState<ResultType>> = flow {
+        emit(ResourceState.Loading())
         val dbSource = loadFromDB().first()
         if (shouldFetch(dbSource)) {
-            emit(Resource.Loading())
+            emit(ResourceState.Loading())
             when (val apiResponse = createCall().first()) {
                 is ApiResponse.Success -> {
                     saveCallResult(apiResponse.data)
                     emitAll(loadFromDB().map {
-                        Resource.Success(it)
+                        ResourceState.Success(it)
                     })
                 }
 
                 is ApiResponse.Empty -> {
 
                     emitAll(loadFromDB().map {
-                        Resource.Success(it)
+                        ResourceState.Success(it)
                     })
                 }
 
                 is ApiResponse.Error -> {
                     emit(
-                        Resource.Error(apiResponse.errorMessage)
+                        ResourceState.Error(apiResponse.errorMessage)
                     )
                 }
             }
         } else {
-
             emitAll(loadFromDB().map {
-                Resource.Success(it)
+                ResourceState.Success(it)
             })
         }
     }
@@ -52,5 +51,5 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
 
     protected abstract suspend fun saveCallResult(data: RequestType)
 
-    fun asFlow(): Flow<Resource<ResultType>> = result
+    fun asFlow(): Flow<ResourceState<ResultType>> = result
 }

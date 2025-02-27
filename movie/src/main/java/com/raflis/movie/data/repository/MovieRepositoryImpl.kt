@@ -2,7 +2,7 @@ package com.raflis.movie.data.repository
 
 import com.raflis.core.data.NetworkBoundResource
 import com.raflis.core.data.source.remote.network.ApiResponse
-import com.raflis.core.util.Resource
+import com.raflis.core.util.ResourceState
 import com.raflis.movie.data.source.local.MovieLocalDataSource
 import com.raflis.movie.data.source.remote.MovieRemoteDataSource
 import com.raflis.movie.data.source.remote.response.MovieResponse
@@ -18,7 +18,7 @@ class MovieRepositoryImpl @Inject constructor(
     private val remoteDataSource: MovieRemoteDataSource,
     private val localDataSource: MovieLocalDataSource,
 ) : MovieRepository {
-    override fun getAllMovies(movieType: MovieType): Flow<Resource<List<Movie>>> =
+    override fun getAllMovies(movieType: MovieType): Flow<ResourceState<List<Movie>>> =
         object : NetworkBoundResource<List<Movie>, List<MovieResponse>>() {
             override fun loadFromDB(): Flow<List<Movie>> {
                 return localDataSource.getAllMovies(movieType).map {

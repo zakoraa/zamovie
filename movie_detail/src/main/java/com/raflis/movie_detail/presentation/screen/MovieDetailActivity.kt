@@ -10,7 +10,7 @@ import com.raflis.core.domain.model.FavoriteMovie
 import com.raflis.core.presentation.view_model.FavoriteMovieViewModelFactory
 import com.raflis.core.presentation.view_model.FavoriteViewModel
 import com.raflis.core.util.DateFormatter.extractYear
-import com.raflis.core.util.Resource
+import com.raflis.core.util.ResourceState
 import com.raflis.core.util.ToastUtil
 import com.raflis.core.util.loadImage
 import com.raflis.movie_detail.R
@@ -60,7 +60,7 @@ class MovieDetailActivity : AppCompatActivity() {
             }
             ivFavorite.setOnClickListener {
                 val movieDetail = viewModel.movieDetail.value
-                if (movieDetail is Resource.Success) {
+                if (movieDetail is ResourceState.Success) {
                     handleToggleFavoriteMovie(mapDomainToPresentation(movieDetail.data))
                 }
             }
@@ -99,12 +99,12 @@ class MovieDetailActivity : AppCompatActivity() {
             viewModel.movieDetail.collect { movieDetail ->
                 binding.apply {
                     when (movieDetail) {
-                        is Resource.Loading -> {
+                        is ResourceState.Loading -> {
                             showMoviesForYouLoading(true)
                             ivFavorite.isEnabled = false
                         }
 
-                        is Resource.Success -> {
+                        is ResourceState.Success -> {
                             showMoviesForYouLoading(false)
                             val movie = mapDomainToPresentation(movieDetail.data)
                             ivFavorite.isEnabled = true
@@ -126,7 +126,7 @@ class MovieDetailActivity : AppCompatActivity() {
                             }
                         }
 
-                        is Resource.Error -> {
+                        is ResourceState.Error -> {
                             showMoviesForYouLoading(false)
                             ivFavorite.isEnabled = false
                             ToastUtil.showToast(
