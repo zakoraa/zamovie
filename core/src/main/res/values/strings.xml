@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name">Zamovie</string>
     <string name="title_favorite">favorite</string>
-    <string name="decoration_2_desc">Ball decoration top right </string>
-    <string name="decoration_1_desc">Ball decoration bottom left </string>
     <string name="star_icon_desc">star icon</string>
     <string name="movie_card_item_image_desc">movie poster</string>
     <string name="no_data">No Data</string>

@@ -1,6 +1,7 @@
 package com.raflis.core.util
 
 import android.content.Context
+import androidx.core.content.edit
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import net.sqlcipher.database.SQLiteDatabase
@@ -29,7 +30,7 @@ object SecureDatabaseUtil {
             SQLiteDatabase.getBytes(storedPassphrase.toCharArray())
         } else {
             val newPassphrase = UUID.randomUUID().toString()
-            sharedPreferences.edit().putString(KEY_PASSPHRASE, newPassphrase).apply()
+            sharedPreferences.edit { putString(KEY_PASSPHRASE, newPassphrase) }
             SQLiteDatabase.getBytes(newPassphrase.toCharArray())
         }
     }
