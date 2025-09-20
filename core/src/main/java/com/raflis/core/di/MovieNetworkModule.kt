@@ -26,7 +26,7 @@ object MovieNetworkModule {
         val hostname = "api.themoviedb.org"
 
         val certificatePinner = CertificatePinner.Builder()
-            .add(hostname, "sha256/k1Hdw5sdSn5kh/gemLVSQD/P4i4IBQEY1tW4WNxh9XM=")
+            .add(hostname, "sha256/f78NVAesYtdZ9OGSbK7VtGQkSIVykh3DnduuLIJHMu4=")
             .build()
 
         return OkHttpClient.Builder()

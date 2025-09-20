@@ -18,6 +18,7 @@
             <option value="$PROJECT_DIR$/movie_detail" />
           </set>
         </option>
+        <option name="resolveExternalAnnotations" value="true" />
       </GradleProjectSettings>
     </option>
     <option name="parallelModelFetch" value="true" />
